@@ -15,7 +15,7 @@
                 <div class="upload-icon">
                     <i class="fas fa-file-excel"></i>
                 </div>
-                
+
                 {% if error %}
                 <div class="alert alert-error">
                     <i class="fas fa-exclamation-triangle"></i>
@@ -54,7 +54,7 @@
                         </ul>
                     </div>
 
-                    <button type="submit" class="btn btn-primary btn-large btn-loading" id="submitBtn" disabled>
+                    <button type="submit" class="btn btn-secondary btn-large btn-loading" id="submitBtn" disabled>
                         <span class="btn-text">
                             <i class="fas fa-chart-bar"></i>
                             Создать отчет
@@ -190,7 +190,7 @@ document.addEventListener('DOMContentLoaded', function() {
     uploadForm.addEventListener('submit', function() {
         const btnText = submitBtn.querySelector('.btn-text');
         const btnSpinner = submitBtn.querySelector('.btn-spinner');
-        
+
         btnText.style.display = 'none';
         btnSpinner.style.display = 'block';
         submitBtn.disabled = true;

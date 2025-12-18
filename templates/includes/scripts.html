@@ -332,12 +332,12 @@ function updateBlock2() {
 
             chartsHTML += `
                 <div class="pie-chart-with-legend">
-                    <div style="font-size: 20px; font-weight: bold; color: #2E8B57; text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e9ecef;">
+                    <div style="font-size: 20px; font-weight: bold; color: #58A0FC; text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #D8E6F8;">
                         ${equipment}
                     </div>
                     <div id="pie-${equipment.replace(/[^a-zA-Z0-9]/g, '_')}"
                          style="width: 400px; height: 400px;"></div>
-                    <div style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; color: #495057;">
+                    <div style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; color: #14171A;">
                         Всего: ${totalHours.toFixed(1)} часов
                     </div>
                 </div>
@@ -496,7 +496,7 @@ function updateBlock3() {
         });
 
         // Итоговая строка
-        tablesHTML += `<tr style="background: #e9ecef;"><td><strong>ВСЕГО</strong></td>`;
+        tablesHTML += `<tr style="background: #D8E6F8;"><td><strong>ВСЕГО</strong></td>`;
         statusData.status_list.forEach(status => {
             let statusTotal = 0;
             statusData.equipment_list.forEach(equipment => {

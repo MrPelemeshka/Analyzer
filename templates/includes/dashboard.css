@@ -10,7 +10,7 @@ html, body {
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #98C5FF 3%, #011A38 100%);
     min-height: 100vh;
     overflow-x: hidden;
 }
@@ -23,7 +23,7 @@ html, body {
 }
 
 .dashboard-header {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2rem;
@@ -48,17 +48,17 @@ html, body {
     gap: 0.75rem;
     font-weight: 700;
     font-size: 1.5rem;
-    color: #1605F2;
-    background: rgba(255, 255, 255, 0.9);
+    color: #217FF9;
+    background: rgba(255, 255, 255, 1);
     padding: 0.75rem 1.5rem;
     border-radius: 50px;
-    border: 2px solid rgba(22, 5, 242, 0.3);
-    box-shadow: 0 4px 15px rgba(22, 5, 242, 0.2);
+    border: 2px solid #D8E6F8;
+    box-shadow: 0 4px 15px #D8E6F8;
 }
 
 .brand-logo i {
     font-size: 1.75rem;
-    color: #1605F2;
+    color: #217FF9;
 }
 
 .logo-image {
@@ -70,7 +70,7 @@ html, body {
 .report-info h1 {
     margin: 0 0 1rem 0;
     font-size: 2.25rem;
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #98C5FF 3%, #011A38 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -86,16 +86,16 @@ html, body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #666;
+    color: #58A0FC;
     font-weight: 500;
-    background: rgba(255, 255, 255, 0.8);
+    background: rgba(255, 255, 255, 1);
     padding: 0.5rem 1rem;
     border-radius: 25px;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .meta-item i {
-    color: #1605F2;
+    color: #217FF9;
 }
 
 .dashboard-actions {
@@ -113,14 +113,14 @@ html, body {
     font-weight: 600;
     cursor: pointer;
     transition: all 0.3s ease;
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #58A0FC 3%, #0B4DA2 100%);
     color: white;
     border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: 0 4px 15px rgba(22, 5, 242, 0.3);
 }
 
 .btn-print:hover, .btn-expand:hover {
-    background: linear-gradient(135deg, #A020F0 3%, #0F04B8 100%);
+    background: linear-gradient(135deg, #98C5FF 3%, #011A38 100%);
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(22, 5, 242, 0.4);
 }
@@ -146,7 +146,7 @@ html, body {
 }
 
 .block h2 {
-    color: #1605F2;
+    color: #0B4DA2;
     margin-bottom: 1.5rem;
     font-size: 1.75rem;
     border-bottom: 3px solid rgba(22, 5, 242, 0.3);
@@ -178,7 +178,7 @@ html, body {
 
 .control-group label {
     font-weight: 600;
-    color: #1605F2;
+    color: #58A0FC;
     font-size: 0.9rem;
     display: flex;
     align-items: center;
@@ -199,7 +199,7 @@ html, body {
 
 .control-select:focus, .control-group input:focus {
     outline: none;
-    border-color: #1605F2;
+    border-color: #58A0FC;
     box-shadow: 0 0 0 3px rgba(22, 5, 242, 0.1);
 }
 
@@ -282,7 +282,7 @@ html, body {
 }
 
 .compact-table th {
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #98C5FF 3%, #011A38 100%);
     color: white;
     font-weight: 600;
     position: sticky;
@@ -329,7 +329,7 @@ html, body {
 .no-data {
     text-align: center;
     padding: 3rem;
-    color: #666;
+    color: #D8E6F8;
     font-style: italic;
     background: rgba(248, 249, 250, 0.8);
     border-radius: 15px;
@@ -341,7 +341,7 @@ html, body {
 .no-data i {
     font-size: 3rem;
     margin-bottom: 1rem;
-    color: #ccc;
+    color: #D8E6F8;
 }
 
 /* Date Range */
@@ -349,7 +349,7 @@ html, body {
     text-align: center;
     margin: 1rem 0;
     font-weight: 600;
-    color: #1605F2;
+    color: #217FF9;
     background: rgba(22, 5, 242, 0.1);
     padding: 1rem;
     border-radius: 10px;
@@ -371,7 +371,7 @@ html, body {
     background: white;
     padding: 1.5rem;
     border-radius: 15px;
-    border-left: 4px solid #1605F2;
+    border-left: 4px solid #217FF9;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
@@ -384,19 +384,19 @@ html, body {
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #1605F2;
+    color: #217FF9;
     margin-bottom: 0.5rem;
 }
 
 .stat-label {
     font-size: 0.9rem;
-    color: #666;
+    color: #0B4DA2;
     font-weight: 500;
 }
 
 /* Dashboard Footer */
 .dashboard-footer {
-    background: rgba(255, 255, 255, 0.95);
+    background: rgba(255, 255, 255, 1);
     backdrop-filter: blur(10px);
     border-radius: 20px;
     padding: 2rem;
@@ -434,7 +434,7 @@ html, body {
     display: flex;
     align-items: center;
     gap: 0.5rem;
-    color: #1605F2;
+    color: #217FF9;
     text-decoration: none;
     font-weight: 500;
     transition: color 0.3s ease;
@@ -444,19 +444,19 @@ html, body {
 }
 
 .footer-link:hover {
-    color: #0F04B8;
-    background: rgba(22, 5, 242, 0.2);
+    color: #0B4DA2;
+    background: rgba(216, 230, 248, 1);
 }
 
 .footer-meta {
     text-align: right;
-    color: #666;
+    color: #0B4DA2;
     font-size: 0.85rem;
 }
 
 .timestamp {
     font-weight: 600;
-    color: #1605F2;
+    color: #217FF9;
     margin-top: 0.5rem;
     background: rgba(22, 5, 242, 0.1);
     padding: 0.5rem 1rem;
@@ -490,11 +490,11 @@ html, body {
     .dashboard-container {
         padding: 15px;
     }
-    
+
     .block {
         padding: 2rem;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
@@ -505,66 +505,66 @@ html, body {
     .dashboard-container {
         padding: 10px;
     }
-    
+
     .dashboard-header {
         flex-direction: column;
         gap: 1.5rem;
         text-align: center;
         padding: 1.5rem;
     }
-    
+
     .dashboard-brand {
         flex-direction: column;
         gap: 1rem;
     }
-    
+
     .report-meta {
         justify-content: center;
     }
-    
+
     .report-info h1 {
         font-size: 1.75rem;
     }
-    
+
     .block {
         padding: 1.5rem;
         margin-bottom: 1rem;
     }
-    
+
     .controls-panel {
         grid-template-columns: 1fr;
         padding: 1rem;
         gap: 0.75rem;
     }
-    
+
     .chart-container {
         padding: 1rem;
         min-height: 400px;
     }
-    
+
     .brand-logo {
         font-size: 1.25rem;
         padding: 0.5rem 1rem;
     }
-    
+
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
         gap: 1.5rem;
     }
-    
+
     .footer-brand .brand-logo {
         justify-content: center;
     }
-    
+
     .footer-links {
         align-items: center;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
     }
-    
+
     .pie-chart-with-legend {
         min-width: 100%;
         margin: 0.5rem 0;
@@ -575,30 +575,30 @@ html, body {
     .dashboard-container {
         padding: 5px;
     }
-    
+
     .block {
         padding: 1rem;
     }
-    
+
     .chart-container {
         padding: 0.5rem;
         min-height: 300px;
     }
-    
+
     .brand-logo {
         font-size: 1rem;
         padding: 0.5rem;
     }
-    
+
     .report-info h1 {
         font-size: 1.5rem;
     }
-    
+
     .dashboard-actions {
         flex-direction: column;
         width: 100%;
     }
-    
+
     .btn-print, .btn-expand {
         width: 100%;
         justify-content: center;
@@ -627,7 +627,7 @@ html, body {
 
 .control-group label {
     font-weight: 600;
-    color: #1605F2;
+    color: #217FF9;
     font-size: 0.9rem;
     display: flex;
     align-items: center;
@@ -644,12 +644,12 @@ html, body {
     font-family: inherit;
     width: 100%;
     box-sizing: border-box;
-    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    background: linear-gradient(135deg, #ffffff, #D8E6F8);
 }
 
 .control-select:focus, .control-group input:focus {
     outline: none;
-    border-color: #1605F2;
+    border-color: #217FF9;
     box-shadow: 0 0 0 3px rgba(22, 5, 242, 0.1);
     background: white;
 }
@@ -693,7 +693,7 @@ html, body {
 }
 
 .compact-table th {
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #98C5FF 3%, #011A38 100%);
     color: white;
     font-weight: 600;
     position: sticky;
@@ -760,7 +760,7 @@ html, body {
     background: white;
     padding: 1.5rem;
     border-radius: 15px;
-    border-left: 4px solid #1605F2;
+    border-left: 4px solid #217FF9;
     text-align: center;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease;
@@ -775,14 +775,8 @@ html, body {
 .stat-value {
     font-size: 2rem;
     font-weight: 700;
-    color: #1605F2;
+    color: #217FF9;
     margin-bottom: 0.5rem;
-}
-
-.stat-label {
-    font-size: 0.9rem;
-    color: #666;
-    font-weight: 500;
 }
 
 /* Стили для легенды статусов */
@@ -833,26 +827,26 @@ html, body {
         gap: 1rem;
         padding: 1rem;
     }
-    
+
     .control-group {
         gap: 0.5rem;
     }
-    
+
     .stats-grid {
         grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
+
     .pie-chart-with-legend {
         min-width: 100%;
         margin: 0.5rem 0;
     }
-    
+
     .status-legend {
         justify-content: flex-start;
         padding: 1rem;
     }
-    
+
     .status-item {
         font-size: 0.8rem;
         padding: 0.4rem 0.8rem;
@@ -863,23 +857,23 @@ html, body {
     .controls-panel {
         padding: 0.75rem;
     }
-    
+
     .control-select, .control-group input {
         padding: 0.6rem 0.8rem;
         font-size: 0.85rem;
     }
-    
+
     .stat-card {
         padding: 1rem;
     }
-    
+
     .stat-value {
         font-size: 1.5rem;
     }
 }
 
 .logo-gradient {
-    background: linear-gradient(135deg, #BB27FF 3%, #1605F2 100%);
+    background: linear-gradient(135deg, #58A0FC 3%, #0B4DA2 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

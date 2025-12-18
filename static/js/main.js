@@ -126,26 +126,17 @@ function initializeTelegramFeedback() {
     const modalClose = document.getElementById('modalClose');
     const telegramOptions = document.querySelectorAll('.telegram-option');
 
-    console.log('Initializing Telegram feedback...');
-    console.log('Feedback button:', feedbackBtn);
-    console.log('Feedback modal:', feedbackModal);
-    console.log('Modal close:', modalClose);
-    console.log('Telegram options:', telegramOptions.length);
-
     // Открытие модального окна
     if (feedbackBtn) {
         feedbackBtn.addEventListener('click', function(e) {
             e.preventDefault();
-            console.log('Feedback button clicked');
             if (feedbackModal) {
                 feedbackModal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
             } else {
-                console.error('Modal not found when button clicked');
             }
         });
     } else {
-        console.error('Feedback button not found');
     }
 
     // Закрытие модального окна
@@ -174,7 +165,6 @@ function initializeTelegramFeedback() {
         option.addEventListener('click', function(e) {
             e.preventDefault();
             const type = this.getAttribute('data-type');
-            console.log('Telegram option clicked:', type);
             openTelegram(type);
         });
     });
@@ -182,7 +172,6 @@ function initializeTelegramFeedback() {
 
 // Функции для открытия Telegram
 function openTelegram(type) {
-    console.log('Opening Telegram:', type);
 
     // ЗАМЕНИ эти ссылки на свои!
     const telegramUrls = {
@@ -206,7 +195,6 @@ function openTelegram(type) {
             document.body.style.overflow = 'auto';
         }
     } else {
-        console.error('Invalid Telegram type:', type);
     }
 }
 
