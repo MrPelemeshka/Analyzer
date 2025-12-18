@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block title %}Отчет готов - эффективность.рф{% endblock %}
+
+{% block content %}
+<section class="thank-you-section">
+    <div class="container">
+        <div class="thank-you-content">
+            <div class="success-animation">
+                <div class="success-icon">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="confetti"></div>
+            </div>
+            
+            <h1>Отчет успешно создан!</h1>
+            <p class="success-message">
+                Ваш файл анализа оборудования готов к использованию. 
+                Отчет содержит все необходимые графики и таблицы для анализа эффективности.
+            </p>
+
+            <div class="download-info">
+                <div class="info-card">
+                    <i class="fas fa-download"></i>
+                    <h3>Файл скачан</h3>
+                    <p>Отчет сохранен на вашем устройстве</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-chart-bar"></i>
+                    <h3>4 типа анализа</h3>
+                    <p>Временные шкалы, диаграммы, таблицы и детальная аналитика</p>
+                </div>
+                <div class="info-card">
+                    <i class="fas fa-mobile-alt"></i>
+                    <h3>Доступен офлайн</h3>
+                    <p>Отчет работает без подключения к интернету</p>
+                </div>
+            </div>
+
+            <div class="action-buttons">
+                <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-large">
+                    <i class="fas fa-plus"></i>
+                    Создать новый отчет
+                </a>
+                <a href="{{ url_for('index') }}" class="btn btn-secondary btn-large">
+                    <i class="fas fa-home"></i>
+                    На главную
+                </a>
+            </div>
+
+            <div class="cta-promo">
+                <div class="promo-card">
+                    <h3>Нужна более сложная аналитика?</h3>
+                    <p>Посетите наш основной сайт для получения расширенных возможностей анализа данных</p>
+                    <a href="https://эффективность.рф" target="_blank" class="btn btn-outline btn-promo">
+                        <i class="fas fa-external-link-alt"></i>
+                        Перейти на эффективность.рф
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add confetti animation
+    function createConfetti() {
+        const confetti = document.querySelector('.confetti');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'confetti-particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 2 + 's';
+            particle.style.backgroundColor = getRandomColor();
+            confetti.appendChild(particle);
+        }
+    }
+
+    function getRandomColor() {
+        const colors = ['#FF6B6B', '#51CF66', '#FF922B', '#5F3DC4', '#228BE6'];
+        return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+    createConfetti();
+});
+</script>
+{% endblock %}

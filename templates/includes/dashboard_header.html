@@ -1,0 +1,50 @@
+<header class="dashboard-header">
+    <div class="dashboard-brand">
+        <div class="brand-logo">
+            <i class="fas fa-chart-line"></i>
+            <span class="logo-gradient">эффективность.рф</span>
+        </div>
+        <div class="report-info">
+            <h1>Анализ статусов оборудования</h1>
+            <div class="report-meta">
+                <span class="meta-item">
+                    <i class="fas fa-calendar"></i>
+                    Создан: {{ current_time }}
+                </span>
+                <span class="meta-item">
+                    <i class="fas fa-database"></i>
+                    Записей: {{ records_count }}
+                </span>
+                <span class="meta-item">
+                    <i class="fas fa-cogs"></i>
+                    Оборудование: {{ equipment_count }} ед.
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="dashboard-actions">
+        <button class="btn-print" onclick="window.print()">
+            <i class="fas fa-print"></i>
+            Печать
+        </button>
+        <button class="btn-expand" id="toggleFullscreen">
+            <i class="fas fa-expand"></i>
+            Полный экран
+        </button>
+    </div>
+</header>
+
+<script>
+// Fullscreen toggle
+document.getElementById('toggleFullscreen')?.addEventListener('click', function() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(err => {
+            console.log(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+    } else {
+        if (document.exitFullscreen) {
+            document.exitFullscreen();
+        }
+    }
+});
+</script>

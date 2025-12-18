@@ -1,0 +1,30 @@
+<div class="block">
+    <h2>4. 📈 Детальный анализ выбранного оборудования</h2>
+    <div class="controls-panel">
+        <div class="control-group">
+            <label for="detail-equipment">Оборудование:</label>
+            <select id="detail-equipment" class="control-select" onchange="updateBlock4()">
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="detail-period">Период анализа графика:</label>
+            <select id="detail-period" class="control-select" onchange="updateBlock4()">
+                <option value="days">Дни</option>
+                <option value="weeks">Недели</option>
+                <option value="months">Месяцы</option>
+            </select>
+        </div>
+        <div class="control-group">
+            <label for="detail-start-date">Начальная дата:</label>
+            <input type="date" id="detail-start-date" class="control-select" onchange="updateBlock4()">
+        </div>
+        <div class="control-group">
+            <label for="detail-end-date">Конечная дата:</label>
+            <input type="date" id="detail-end-date" class="control-select" onchange="updateBlock4()">
+        </div>
+    </div>
+    <div class="chart-container">
+        <div id="block4-chart"></div>
+    </div>
+    <div class="stats-grid" id="block4-stats"></div>
+</div>

@@ -1,0 +1,758 @@
+// Данные для анализа
+const statusData = {{ js_data|safe }};
+
+console.log('Загружено записей:', statusData.records.length);
+console.log('Оборудование:', statusData.equipment_list);
+console.log('Статусы:', statusData.status_list);
+
+// Инициализация при загрузке
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('DOM загружен, начинаем инициализацию...');
+    try {
+        initializeApp();
+    } catch (error) {
+        console.error('Ошибка при инициализации:', error);
+        showError('Произошла ошибка при загрузке отчета: ' + error.message);
+    }
+});
+
+function initializeApp() {
+    console.log('Инициализация приложения...');
+
+    // Сначала заполняем селекты, потом обновляем блоки
+    populateEquipmentSelects();
+    populateDateSelects();
+    populateStatusLegend('block1-legend');
+
+    // Даем время на рендеринг DOM перед обновлением графиков
+    setTimeout(() => {
+        try {
+            updateAllBlocks();
+            console.log('Все блоки успешно обновлены');
+        } catch (error) {
+            console.error('Ошибка при обновлении блоков:', error);
+        }
+    }, 100);
+}
+
+function populateEquipmentSelects() {
+    console.log('Заполняем селекты оборудования...');
+
+    // Для блока 1
+    const ganttSelect = document.getElementById('gantt-equipment');
+    // Для блока 4
+    const detailSelect = document.getElementById('detail-equipment');
+
+    if (!ganttSelect || !detailSelect) {
+        console.error('Не найдены селекты оборудования');
+        return;
+    }
+
+    // Очищаем существующие опции (кроме "Все оборудование")
+    while (ganttSelect.children.length > 1) {
+        ganttSelect.removeChild(ganttSelect.lastChild);
+    }
+
+    while (detailSelect.children.length > 0) {
+        detailSelect.removeChild(detailSelect.lastChild);
+    }
+
+    statusData.equipment_list.forEach(equipment => {
+        // Блок 1
+        const option1 = document.createElement('option');
+        option1.value = equipment;
+        option1.textContent = equipment;
+        ganttSelect.appendChild(option1);
+
+        // Блок 4
+        const option4 = document.createElement('option');
+        option4.value = equipment;
+        option4.textContent = equipment;
+        detailSelect.appendChild(option4);
+    });
+
+    // Устанавливаем первое оборудование по умолчанию для блока 4
+    if (statusData.equipment_list.length > 0) {
+        detailSelect.value = statusData.equipment_list[0];
+    }
+
+    console.log('Селекты оборудования заполнены');
+}
+
+function populateDateSelects() {
+    console.log('Заполняем даты...');
+
+    if (!statusData.records || statusData.records.length === 0) {
+        console.error('Нет данных для заполнения дат');
+        return;
+    }
+
+    // Находим минимальную и максимальную даты в данных
+    let minDate = new Date();
+    let maxDate = new Date(0);
+
+    statusData.records.forEach(record => {
+        try {
+            const recordDate = new Date(record.start_time.split('T')[0]);
+            if (recordDate < minDate) minDate = recordDate;
+            if (recordDate > maxDate) maxDate = recordDate;
+        } catch (error) {
+            console.warn('Ошибка при обработке даты записи:', record.start_time);
+        }
+    });
+
+    console.log('Диапазон дат:', minDate.toISOString(), 'до', maxDate.toISOString());
+
+    // Для блока 2 - устанавливаем даты по умолчанию (последние 7 дней)
+    const pieStart = document.getElementById('pie-start-date');
+    const pieEnd = document.getElementById('pie-end-date');
+
+    if (pieStart && pieEnd) {
+        const defaultEndDate = new Date(maxDate);
+        const defaultStartDate = new Date(defaultEndDate);
+        defaultStartDate.setDate(defaultStartDate.getDate() - 7);
+
+        pieStart.valueAsDate = defaultStartDate;
+        pieEnd.valueAsDate = defaultEndDate;
+        console.log('Даты для блока 2 установлены');
+    }
+
+    // Для блока 3 - устанавливаем даты по умолчанию (все данные)
+    const tableStart = document.getElementById('table-start-date');
+    const tableEnd = document.getElementById('table-end-date');
+
+    if (tableStart && tableEnd) {
+        tableStart.valueAsDate = minDate;
+        tableEnd.valueAsDate = maxDate;
+        console.log('Даты для блока 3 установлены');
+    }
+
+    // Для блока 4 - устанавливаем даты по умолчанию (последние 30 дней)
+    const detailStart = document.getElementById('detail-start-date');
+    const detailEnd = document.getElementById('detail-end-date');
+
+    if (detailStart && detailEnd) {
+        const detailStartDate = new Date(maxDate);
+        detailStartDate.setDate(detailStartDate.getDate() - 30);
+
+        detailStart.valueAsDate = detailStartDate;
+        detailEnd.valueAsDate = maxDate;
+        console.log('Даты для блока 4 установлены');
+    }
+}
+
+function populateStatusLegend(legendId) {
+    console.log('Заполняем легенду статусов...');
+
+    const legend = document.getElementById(legendId);
+    if (!legend) {
+        console.error('Не найдена легенда с id:', legendId);
+        return;
+    }
+
+    // Очищаем существующую легенду
+    legend.innerHTML = '';
+
+    statusData.status_list.forEach(status => {
+        const color = statusData.status_colors[status] || '#808080';
+        const item = document.createElement('div');
+        item.className = 'status-item';
+        item.innerHTML =
+            '<div class="status-color" style="background-color: ' + color + '"></div>' +
+            '<span>' + status + '</span>';
+        legend.appendChild(item);
+    });
+
+    console.log('Легенда статусов заполнена');
+}
+
+function updateAllBlocks() {
+    console.log('Обновляем все блоки...');
+    try {
+        updateBlock1();
+        updateBlock2();
+        updateBlock3();
+        updateBlock4();
+        console.log('Все блоки обновлены успешно');
+    } catch (error) {
+        console.error('Ошибка при обновлении блоков:', error);
+    }
+}
+
+// БЛОК 1: Единая временная шкала всех данных
+function updateBlock1() {
+    console.log('Обновляем блок 1...');
+
+    const selectedEquipment = document.getElementById('gantt-equipment')?.value || 'all';
+    const chartElement = document.getElementById('block1-chart');
+
+    if (!chartElement) {
+        console.error('Не найден элемент для графика блока 1');
+        return;
+    }
+
+    // Фильтруем данные по оборудованию
+    let filteredData = statusData.records;
+    if (selectedEquipment !== 'all') {
+        filteredData = filteredData.filter(record => record.equipment === selectedEquipment);
+    }
+
+    if (filteredData.length === 0) {
+        chartElement.innerHTML = '<div class="no-data">Нет данных для отображения</div>';
+        return;
+    }
+
+    try {
+        // Создаем диаграмму Ганта
+        const traces = [];
+
+        // Группируем данные по оборудованию
+        const equipmentGroups = {};
+        filteredData.forEach(record => {
+            if (!equipmentGroups[record.equipment]) {
+                equipmentGroups[record.equipment] = [];
+            }
+            equipmentGroups[record.equipment].push(record);
+        });
+
+        // Создаем трассировки для каждого оборудования
+        Object.keys(equipmentGroups).forEach(equipment => {
+            const records = equipmentGroups[equipment];
+
+            records.forEach(record => {
+                traces.push({
+                    x: [record.start_time, record.end_time],
+                    y: [equipment, equipment],
+                    mode: 'lines',
+                    line: {
+                        width: 20,
+                        color: statusData.status_colors[record.status] || '#666666'
+                    },
+                    name: record.status,
+                    legendgroup: record.status,
+                    showlegend: false,
+                    hoverinfo: 'text',
+                    text: `Оборудование: ${equipment}<br>Статус: ${record.status}<br>Начало: ${new Date(record.start_time).toLocaleString('ru-RU')}<br>Окончание: ${new Date(record.end_time).toLocaleString('ru-RU')}<br>Длительность: ${record.duration_hours.toFixed(2)} ч`
+                });
+            });
+        });
+
+        const titleText = selectedEquipment === 'all' ?
+            'Временная шкала статусов всего оборудования' :
+            'Временная шкала статусов: ' + selectedEquipment;
+
+        // Находим диапазон дат
+        const allDates = filteredData.flatMap(record => [new Date(record.start_time), new Date(record.end_time)]);
+        const minDate = new Date(Math.min(...allDates));
+        const maxDate = new Date(Math.max(...allDates));
+
+        const layout = {
+            title: titleText,
+            xaxis: {
+                title: 'Время',
+                type: 'date',
+                rangeslider: {
+                    visible: true,
+                    range: [minDate.toISOString().split('T')[0], maxDate.toISOString().split('T')[0]]
+                },
+                range: [minDate.toISOString(), maxDate.toISOString()]
+            },
+            yaxis: {
+                title: 'Оборудование',
+                type: 'category',
+                categoryorder: 'array',
+                categoryarray: Object.keys(equipmentGroups)
+            },
+            height: Math.max(500, Object.keys(equipmentGroups).length * 40),
+            showlegend: false,
+            margin: { l: 150, r: 50, t: 80, b: 100 }
+        };
+
+        Plotly.newPlot('block1-chart', traces, layout);
+        console.log('Блок 1 успешно обновлен');
+    } catch (error) {
+        console.error('Ошибка при создании графика блока 1:', error);
+        chartElement.innerHTML = '<div class="no-data">Ошибка при создании графика</div>';
+    }
+}
+
+// БЛОК 2: Круговые диаграммы (в часах)
+function updateBlock2() {
+    console.log('Обновляем блок 2...');
+
+    const startDate = document.getElementById('pie-start-date')?.value;
+    const endDate = document.getElementById('pie-end-date')?.value;
+    const chartsContainer = document.getElementById('block2-charts');
+
+    if (!chartsContainer) {
+        console.error('Не найден контейнер для блока 2');
+        return;
+    }
+
+    if (!startDate || !endDate) {
+        chartsContainer.innerHTML = '<div class="no-data">Выберите начальную и конечную даты</div>';
+        return;
+    }
+
+    try {
+        // Фильтруем данные по периоду
+        const filteredData = statusData.records.filter(record => {
+            const recordDate = record.start_time.split('T')[0];
+            return recordDate >= startDate && recordDate <= endDate;
+        });
+
+        if (filteredData.length === 0) {
+            chartsContainer.innerHTML = '<div class="no-data">Нет данных для выбранного периода</div>';
+            return;
+        }
+
+        // Группируем данные по оборудованию и статусам
+        const equipmentData = {};
+        filteredData.forEach(record => {
+            if (!equipmentData[record.equipment]) {
+                equipmentData[record.equipment] = {};
+            }
+            if (!equipmentData[record.equipment][record.status]) {
+                equipmentData[record.equipment][record.status] = 0;
+            }
+            equipmentData[record.equipment][record.status] += record.duration_hours;
+        });
+
+        // Создаем контейнер для диаграмм
+        const equipmentList = Object.keys(equipmentData);
+        let chartsHTML = '<div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px;">';
+
+        equipmentList.forEach(equipment => {
+            const statusDataForEquipment = equipmentData[equipment];
+            const labels = Object.keys(statusDataForEquipment);
+            const values = Object.values(statusDataForEquipment);
+            const colors = labels.map(status => statusData.status_colors[status] || '#808080');
+
+            const totalHours = values.reduce((sum, val) => sum + val, 0);
+
+            chartsHTML += `
+                <div class="pie-chart-with-legend">
+                    <div style="font-size: 20px; font-weight: bold; color: #2E8B57; text-align: center; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #e9ecef;">
+                        ${equipment}
+                    </div>
+                    <div id="pie-${equipment.replace(/[^a-zA-Z0-9]/g, '_')}"
+                         style="width: 400px; height: 400px;"></div>
+                    <div style="margin-top: 15px; font-weight: bold; text-align: center; font-size: 16px; color: #495057;">
+                        Всего: ${totalHours.toFixed(1)} часов
+                    </div>
+                </div>
+            `;
+        });
+
+        chartsHTML += '</div>';
+        chartsContainer.innerHTML = chartsHTML;
+
+        // Создаем графики для каждого оборудования
+        equipmentList.forEach(equipment => {
+            const statusDataForEquipment = equipmentData[equipment];
+            const labels = Object.keys(statusDataForEquipment);
+            const values = Object.values(statusDataForEquipment);
+            const colors = labels.map(status => statusData.status_colors[status] || '#808080');
+
+            // Вычисляем общее время
+            const totalHours = values.reduce((a, b) => a + b, 0);
+
+            const pieData = [{
+                labels: labels.map((label, index) => {
+                    const hours = values[index];
+                    const percent = totalHours > 0 ? ((hours / totalHours) * 100).toFixed(1) : 0;
+                    return `${label} - ${percent}% (${hours.toFixed(1)} ч)`;
+                }),
+                values: values,
+                type: 'pie',
+                hole: 0.4,
+                marker: { colors: colors },
+                textinfo: 'label+percent', // Показываем проценты на диаграмме
+                hoverinfo: 'label+percent+value',
+                hovertemplate: '<b>%{label}</b><br>%{value:.1f} ч (%{percent})<extra></extra>',
+                textposition: 'inside', // Проценты внутри сегментов
+                texttemplate: '%{percent:.1%}', // Формат процентов
+                insidetextorientation: 'radial' // Ориентация текста
+            }];
+
+            const layout = {
+                showlegend: true,
+                legend: {
+                    orientation: 'h',
+                    y: -0.25,
+                    x: 0.5,
+                    xanchor: 'center',
+                    yanchor: 'top',
+                    font: { size: 11 },
+                    itemwidth: 30,
+                    itemheight: 15,
+                    itemsizing: 'constant',
+                    tracegroupgap: 5,
+                    grouptitlefont: { size: 0 }
+                },
+                margin: { t: 50, b: 100, l: 50, r: 50 },
+                height: 450,
+                annotations: [
+                    {
+                        font: { size: 16, color: '#2E8B57', weight: 'bold' },
+                        showarrow: false,
+                        text: totalHours.toFixed(1) + ' ч<br>' +
+                              (totalHours > 0 ? '100%' : '0%'),
+                        x: 0.5,
+                        y: 0.5
+                    }
+                ]
+            };
+
+            try {
+                Plotly.newPlot(`pie-${equipment.replace(/[^a-zA-Z0-9]/g, '_')}`, pieData, layout);
+            } catch (error) {
+                console.error(`Ошибка при создании круговой диаграммы для ${equipment}:`, error);
+            }
+        });
+
+        console.log('Блок 2 успешно обновлен');
+    } catch (error) {
+        console.error('Ошибка при обновлении блока 2:', error);
+        chartsContainer.innerHTML = '<div class="no-data">Ошибка при создании диаграмм</div>';
+    }
+}
+
+// БЛОК 3: Итоговая таблица по выбранным датам
+function updateBlock3() {
+    console.log('Обновляем блок 3...');
+
+    const startDate = document.getElementById('table-start-date')?.value;
+    const endDate = document.getElementById('table-end-date')?.value;
+    const tablesContainer = document.getElementById('block3-tables');
+
+    if (!tablesContainer) {
+        console.error('Не найден контейнер для блока 3');
+        return;
+    }
+
+    if (!startDate || !endDate) {
+        tablesContainer.innerHTML = '<div class="no-data">Выберите начальную и конечную даты</div>';
+        return;
+    }
+
+    try {
+        // Фильтруем данные по периоду
+        const filteredData = statusData.records.filter(record => {
+            const recordDate = record.start_time.split('T')[0];
+            return recordDate >= startDate && recordDate <= endDate;
+        });
+
+        if (filteredData.length === 0) {
+            tablesContainer.innerHTML = '<div class="no-data">Нет данных для выбранного периода</div>';
+            return;
+        }
+
+        // Создаем итоговую таблицу
+        const summaryData = {};
+
+        filteredData.forEach(record => {
+            const equipment = record.equipment;
+            const status = record.status;
+            const duration = record.duration_hours;
+
+            if (!summaryData[equipment]) {
+                summaryData[equipment] = {};
+            }
+            if (!summaryData[equipment][status]) {
+                summaryData[equipment][status] = 0;
+            }
+            summaryData[equipment][status] += duration;
+        });
+
+        // Создаем HTML для таблицы
+        let tablesHTML = '<div class="date-range">Период: ' + new Date(startDate).toLocaleDateString('ru-RU') + ' - ' + new Date(endDate).toLocaleDateString('ru-RU') + '</div>';
+        tablesHTML += '<table class="compact-table">';
+
+        // Заголовки
+        tablesHTML += '<tr><th>Оборудование</th>';
+        statusData.status_list.forEach(status => {
+            tablesHTML += `<th>${status}</th>`;
+        });
+        tablesHTML += '<th>Всего часов</th></tr>';
+
+        // Данные
+        let grandTotal = 0;
+
+        statusData.equipment_list.forEach(equipment => {
+            if (summaryData[equipment]) {
+                tablesHTML += `<tr><td><strong>${equipment}</strong></td>`;
+                let equipmentTotal = 0;
+
+                statusData.status_list.forEach(status => {
+                    const hours = summaryData[equipment][status] || 0;
+                    tablesHTML += `<td>${hours > 0 ? hours.toFixed(1) : '-'}</td>`;
+                    equipmentTotal += hours;
+                });
+
+                tablesHTML += `<td><strong>${equipmentTotal.toFixed(1)}</strong></td></tr>`;
+                grandTotal += equipmentTotal;
+            }
+        });
+
+        // Итоговая строка
+        tablesHTML += `<tr style="background: #e9ecef;"><td><strong>ВСЕГО</strong></td>`;
+        statusData.status_list.forEach(status => {
+            let statusTotal = 0;
+            statusData.equipment_list.forEach(equipment => {
+                statusTotal += summaryData[equipment]?.[status] || 0;
+            });
+            tablesHTML += `<td><strong>${statusTotal > 0 ? statusTotal.toFixed(1) : '-'}</strong></td>`;
+        });
+        tablesHTML += `<td><strong>${grandTotal.toFixed(1)}</strong></td></tr>`;
+
+        tablesHTML += '</table>';
+
+        tablesContainer.innerHTML = tablesHTML;
+        console.log('Блок 3 успешно обновлен');
+    } catch (error) {
+        console.error('Ошибка при обновлении блока 3:', error);
+        tablesContainer.innerHTML = '<div class="no-data">Ошибка при создании таблицы</div>';
+    }
+}
+
+// БЛОК 4: Детальный анализ
+function updateBlock4() {
+    console.log('Обновляем блок 4...');
+
+    const selectedEquipment = document.getElementById('detail-equipment')?.value;
+    const selectedPeriod = document.getElementById('detail-period')?.value;
+    const startDate = document.getElementById('detail-start-date')?.value;
+    const endDate = document.getElementById('detail-end-date')?.value;
+    const chartElement = document.getElementById('block4-chart');
+    const statsElement = document.getElementById('block4-stats');
+
+    if (!chartElement || !statsElement) {
+        console.error('Не найдены элементы для блока 4');
+        return;
+    }
+
+    if (!startDate || !endDate) {
+        chartElement.innerHTML = '<div class="no-data">Выберите начальную и конечную даты</div>';
+        statsElement.innerHTML = '';
+        return;
+    }
+
+    try {
+        // Фильтруем данные по выбранному периоду
+        const filteredData = statusData.records.filter(record => {
+            const recordDate = record.start_time.split('T')[0];
+            return record.equipment === selectedEquipment &&
+                   recordDate >= startDate &&
+                   recordDate <= endDate;
+        });
+
+        if (filteredData.length === 0) {
+            chartElement.innerHTML = '<div class="no-data">Нет данных для выбранного оборудования и периода</div>';
+            statsElement.innerHTML = '';
+            return;
+        }
+
+        // Группируем данные по периодам для графика
+        const periodData = {};
+
+        filteredData.forEach(record => {
+            const recordDate = new Date(record.start_time.split('T')[0]);
+            let periodKey;
+
+            switch(selectedPeriod) {
+                case 'days':
+                    periodKey = recordDate.toISOString().split('T')[0];
+                    break;
+                case 'weeks':
+                    const weekNumber = getWeekNumber(recordDate);
+                    const monday = getMondayOfWeek(recordDate);
+                    periodKey = monday.getFullYear() + '-W' + String(weekNumber).padStart(2, '0') +
+                                ' (' + monday.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit'}) + ')';
+                    break;
+                case 'months':
+                    periodKey = recordDate.getFullYear() + '-' + String(recordDate.getMonth() + 1).padStart(2, '0');
+                    break;
+                default:
+                    periodKey = recordDate.toISOString().split('T')[0];
+            }
+
+            if (!periodData[periodKey]) {
+                periodData[periodKey] = {};
+            }
+            if (!periodData[periodKey][record.status]) {
+                periodData[periodKey][record.status] = 0;
+            }
+            periodData[periodKey][record.status] += record.duration_hours;
+        });
+
+        // Создаем stacked bar chart
+        const periods = Object.keys(periodData).sort();
+        const periodLabels = periods.map(period => {
+            if (selectedPeriod === 'days') {
+                return new Date(period).toLocaleDateString('ru-RU');
+            } else if (selectedPeriod === 'weeks') {
+                return period + ' неделя';
+            } else {
+                const [year, month] = period.split('-');
+                const monthNames = ['Янв', 'Фев', 'Мар', 'Апр', 'Май', 'Июн', 'Июл', 'Авг', 'Сен', 'Окт', 'Ноя', 'Дек'];
+                return monthNames[parseInt(month) - 1] + ' ' + year;
+            }
+        });
+
+        // Определяем нужный порядок статусов
+        const orderedStatuses = [
+            'Работа',
+            'Готов к работе',
+            'Не мониторится',
+            'Выключен',
+            'Перегрузка',
+            'Неопределённый'
+        ];
+
+        // Фильтруем только те статусы, которые есть в данных
+        const availableStatuses = orderedStatuses.filter(status =>
+            periods.some(period => periodData[period][status] > 0)
+        );
+
+        const traces = availableStatuses.map(status => {
+            const yValues = periods.map(period => periodData[period][status] || 0);
+
+            // Вычисляем проценты
+            const totalByPeriod = periods.map(period =>
+                availableStatuses.reduce((sum, s) => sum + (periodData[period][s] || 0), 0)
+            );
+
+            const percentages = yValues.map((value, index) =>
+                totalByPeriod[index] > 0 ? ((value / totalByPeriod[index]) * 100).toFixed(1) : 0
+            );
+
+            return {
+                x: periodLabels,
+                y: yValues,
+                name: status,
+                type: 'bar',
+                marker: { color: statusData.status_colors[status] || '#808080' },
+                hovertemplate: '<b>%{x}</b><br>%{fullData.name}: %{y:.1f} ч (%{customdata}%)<extra></extra>',
+                customdata: percentages,
+                text: percentages.map(p => p > 0 ? p + '%' : ''), // Показываем проценты вместо часов
+                textposition: 'inside',
+                insidetextanchor: 'middle',
+                textfont: {
+                    color: 'black', // Черный цвет текста
+                    size: 10,
+                    family: 'Inter, sans-serif'
+                }
+            };
+        });
+
+        const periodTitle = selectedPeriod === 'days' ? 'дням' : selectedPeriod === 'weeks' ? 'неделям' : 'месяцам';
+
+        const layout = {
+            title: `Распределение времени ${selectedEquipment} по ${periodTitle}`,
+            xaxis: { title: 'Период' },
+            yaxis: { title: 'Время (часы)' },
+            barmode: 'stack',
+            height: 400,
+            showlegend: true,
+            legend: {
+                traceorder: 'normal'
+            }
+        };
+
+        Plotly.newPlot('block4-chart', traces, layout);
+
+        // Обновляем статистику
+        updateBlock4Stats(filteredData, selectedEquipment);
+
+        console.log('Блок 4 успешно обновлен');
+    } catch (error) {
+        console.error('Ошибка при обновлении блока 4:', error);
+        chartElement.innerHTML = '<div class="no-data">Ошибка при создании графика</div>';
+        statsElement.innerHTML = '';
+    }
+}
+
+function getWeekNumber(date) {
+    const d = new Date(date);
+    d.setHours(0, 0, 0, 0);
+
+    // Первый день года
+    const firstDay = new Date(d.getFullYear(), 0, 1);
+
+    // Устанавливаем понедельник как первый день недели (1 вместо 0)
+    const dayOfWeek = d.getDay() || 7; // Воскресенье становится 7
+
+    // Количество дней от первого дня года
+    const pastDaysOfYear = (d - firstDay) / 86400000;
+
+    // Номер недели (начинается с понедельника)
+    const weekNumber = Math.ceil((pastDaysOfYear + firstDay.getDay() + 1 - dayOfWeek) / 7);
+
+    return weekNumber;
+}
+
+// Новая функция для получения даты понедельника недели
+function getMondayOfWeek(date) {
+    const d = new Date(date);
+    const day = d.getDay();
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Понедельник как первый день
+    return new Date(d.setDate(diff));
+}
+
+// Функция для обновления статистики в блоке 4
+function updateBlock4Stats(filteredData, equipment) {
+    let totalHours = 0;
+    const statusHours = {};
+
+    filteredData.forEach(record => {
+        totalHours += record.duration_hours;
+        if (!statusHours[record.status]) {
+            statusHours[record.status] = 0;
+        }
+        statusHours[record.status] += record.duration_hours;
+    });
+
+    let statsHTML = '';
+    statsHTML += `<div class="stat-card">
+        <div class="stat-value">${totalHours.toFixed(1)}</div>
+        <div class="stat-label">Всего часов</div>
+    </div>`;
+
+    Object.keys(statusHours).forEach(status => {
+        const hours = statusHours[status];
+        const percent = totalHours > 0 ? ((hours / totalHours) * 100).toFixed(1) : 0;
+        statsHTML += `<div class="stat-card">
+            <div class="stat-value">${hours.toFixed(1)}</div>
+            <div class="stat-label">${status} (${percent}%)</div>
+        </div>`;
+    });
+
+    const statsElement = document.getElementById('block4-stats');
+    if (statsElement) {
+        statsElement.innerHTML = statsHTML;
+    }
+}
+
+// Вспомогательная функция для отображения ошибок
+function showError(message) {
+    const errorDiv = document.createElement('div');
+    errorDiv.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #ff6b6b;
+        color: white;
+        padding: 15px 20px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        z-index: 10000;
+        max-width: 400px;
+    `;
+    errorDiv.innerHTML = `<strong>Ошибка:</strong> ${message}`;
+    document.body.appendChild(errorDiv);
+
+    setTimeout(() => {
+        errorDiv.remove();
+    }, 5000);
+}

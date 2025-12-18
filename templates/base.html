@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Анализ эффективности оборудования - эффективность.рф{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.png') }}">
+    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo.png') }}">
+</head>
+<body>
+    <!-- Header -->
+    {% include 'includes/header.html' %}
+
+    <!-- Main Content -->
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- Footer -->
+    {% include 'includes/footer.html' %}
+
+    <!-- Добавь перед закрывающим </body> -->
+    <div class="feedback-floating">
+        <button class="feedback-btn" id="feedbackBtn">
+            <i class="fab fa-telegram"></i>
+            <span class="feedback-text">Написать в Telegram</span>
+        </button>
+    </div>
+
+    <div class="feedback-modal" id="feedbackModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Связь через Telegram</h3>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div class="telegram-options">
+                <div class="telegram-option" data-type="direct">
+                    <div class="option-icon">
+                        <i class="fab fa-telegram"></i>
+                    </div>
+                    <div class="option-content">
+                        <h4>Написать напрямую</h4>
+                        <p>Открыть Telegram и начать диалог</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
+                </div>
+
+                <div class="telegram-option" data-type="group">
+                    <div class="option-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                </div>
+
+                <div class="telegram-info">
+                    <p><strong>Быстрая помощь:</strong> отвечаем в течение 15 минут</p>
+                    <p><strong>Время работы:</strong> 9:00 - 21:00 по МСК</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    function testModal() {
+        const modal = document.getElementById('feedbackModal');
+        console.log('TEST: Showing modal', modal);
+        modal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+
+        // Дополнительная проверка
+        console.log('Modal computed style:', window.getComputedStyle(modal).display);
+        console.log('Modal position:', modal.getBoundingClientRect());
+    }
+
+    function hideModal() {
+        const modal = document.getElementById('feedbackModal');
+        modal.style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    </script>
+
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    {% block scripts %}{% endblock %}
+
+
+</body>
+</html>

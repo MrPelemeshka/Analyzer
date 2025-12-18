@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Главная - Анализ эффективности оборудования{% endblock %}
+
+{% block content %}
+    <!-- Hero Section -->
+    {% include 'includes/hero.html' %}
+
+    <!-- Features Section -->
+    {% include 'includes/features.html' %}
+
+    <!-- Instructions Section -->
+    {% include 'includes/instructions.html' %}
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Готовы оптимизировать ваше оборудование?</h2>
+                <p>Начните анализ прямо сейчас и получите детальную статистику</p>
+                <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-large">
+                    <i class="fas fa-chart-bar"></i>
+                    Начать анализ
+                </a>
+            </div>
+        </div>
+    </section>
+{% endblock %}

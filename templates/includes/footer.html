@@ -1,0 +1,34 @@
+<footer class="main-footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <a href="{{ url_for('index') }}" class="logo">
+                    <img src="{{ url_for('static', filename='images/logo.png') }}" alt="эффективность.рф" class="logo-image">
+                    <span class="logo-gradient">эффективность.рф</span>
+                </a>
+                <p class="footer-description">
+                    Сервис анализа эффективности оборудования. Превращаем данные в понятные отчеты.
+                </p>
+            </div>
+            <div class="footer-links">
+                <h4>Быстрые ссылки</h4>
+                <ul>
+                    <li><a href="{{ url_for('index') }}">Главная</a></li>
+                    <li><a href="{{ url_for('index') }}#features">Возможности</a></li>
+                    <li><a href="{{ url_for('index') }}#instructions">Инструкция</a></li>
+                    <li><a href="{{ url_for('upload_page') }}">Создать отчет</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact">
+                <h4>Контакты</h4>
+                <ul class="contact-info">
+                    <li><i class="fas fa-globe"></i> <a href="https://эффективность.рф">эффективность.рф</a></li>
+                    <li><i class="fas fa-envelope"></i> <a href="mailto:info@эффективность.рф">info@эффективность.рф</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 эффективность.рф. Все права защищены.</p>
+        </div>
+    </div>
+</footer>

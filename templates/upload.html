@@ -1,0 +1,200 @@
+{% extends "base.html" %}
+
+{% block title %}Создание отчета - эффективность.рф{% endblock %}
+
+{% block content %}
+<section class="upload-section">
+    <div class="container">
+        <div class="upload-header">
+            <h1>Создание отчета анализа</h1>
+            <p>Загрузите Excel файл с данными оборудования для генерации комплексного отчета</p>
+        </div>
+
+        <div class="upload-container">
+            <div class="upload-card">
+                <div class="upload-icon">
+                    <i class="fas fa-file-excel"></i>
+                </div>
+                
+                {% if error %}
+                <div class="alert alert-error">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    {{ error }}
+                </div>
+                {% endif %}
+
+                <form method="POST" action="{{ url_for('generate_report') }}" enctype="multipart/form-data" class="upload-form" id="uploadForm">
+                    <div class="file-upload-area" id="fileUploadArea">
+                        <input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required>
+                        <div class="upload-placeholder">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Перетащите Excel файл сюда</h3>
+                            <p>или нажмите для выбора файла</p>
+                            <span>Поддерживаются форматы .xlsx и .xls</span>
+                        </div>
+                        <div class="file-info" id="fileInfo" style="display: none;">
+                            <i class="fas fa-file-excel"></i>
+                            <div class="file-details">
+                                <span class="file-name" id="fileName"></span>
+                                <span class="file-size" id="fileSize"></span>
+                            </div>
+                            <button type="button" class="btn-remove" id="btnRemove">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="upload-requirements">
+                        <h4>Требования к файлу:</h4>
+                        <ul>
+                            <li><i class="fas fa-check"></i> Формат Excel (.xlsx или .xls)</li>
+                            <li><i class="fas fa-check"></i> Колонки: Оборудование, Дата/Время начала, Дата/Время окончания, Статус</li>
+                            <li><i class="fas fa-check"></i> Дата в корректном формате</li>
+                            <li><i class="fas fa-check"></i> Максимальный размер: 10MB</li>
+                        </ul>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-large btn-loading" id="submitBtn" disabled>
+                        <span class="btn-text">
+                            <i class="fas fa-chart-bar"></i>
+                            Создать отчет
+                        </span>
+                        <div class="btn-spinner" style="display: none;">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            Обработка...
+                        </div>
+                    </button>
+                </form>
+            </div>
+
+            <div class="upload-sidebar">
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-info-circle"></i> Что будет в отчете?</h3>
+                    <ul class="features-list">
+                        <li><i class="fas fa-chart-timeline"></i> Временная шкала статусов</li>
+                        <li><i class="fas fa-chart-pie"></i> Круговые диаграммы распределения</li>
+                        <li><i class="fas fa-table"></i> Итоговые таблицы по периодам</li>
+                        <li><i class="fas fa-chart-line"></i> Детальный анализ оборудования</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-card">
+                    <h3><i class="fas fa-clock"></i> Пример данных</h3>
+                    <div class="data-preview">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Оборудование</th>
+                                    <th>Дата начала</th>
+                                    <th>Статус</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Станок №1</td>
+                                    <td>2024-01-15 08:00</td>
+                                    <td>Работа</td>
+                                </tr>
+                                <tr>
+                                    <td>Станок №2</td>
+                                    <td>2024-01-15 09:00</td>
+                                    <td>Готов к работе</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const fileInput = document.getElementById('fileInput');
+    const fileUploadArea = document.getElementById('fileUploadArea');
+    const fileInfo = document.getElementById('fileInfo');
+    const fileName = document.getElementById('fileName');
+    const fileSize = document.getElementById('fileSize');
+    const btnRemove = document.getElementById('btnRemove');
+    const submitBtn = document.getElementById('submitBtn');
+    const uploadForm = document.getElementById('uploadForm');
+
+    // Drag and drop functionality
+    fileUploadArea.addEventListener('dragover', function(e) {
+        e.preventDefault();
+        fileUploadArea.classList.add('dragover');
+    });
+
+    fileUploadArea.addEventListener('dragleave', function() {
+        fileUploadArea.classList.remove('dragover');
+    });
+
+    fileUploadArea.addEventListener('drop', function(e) {
+        e.preventDefault();
+        fileUploadArea.classList.remove('dragover');
+        const files = e.dataTransfer.files;
+        if (files.length > 0) {
+            fileInput.files = files;
+            handleFileSelect(files[0]);
+        }
+    });
+
+    fileInput.addEventListener('change', function(e) {
+        if (e.target.files.length > 0) {
+            handleFileSelect(e.target.files[0]);
+        }
+    });
+
+    btnRemove.addEventListener('click', function() {
+        fileInput.value = '';
+        fileInfo.style.display = 'none';
+        submitBtn.disabled = true;
+        fileUploadArea.querySelector('.upload-placeholder').style.display = 'block';
+    });
+
+    function handleFileSelect(file) {
+        if (file) {
+            const isValidType = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
+            const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+
+            if (!isValidType) {
+                alert('Пожалуйста, выберите Excel файл (.xlsx или .xls)');
+                return;
+            }
+
+            if (!isValidSize) {
+                alert('Файл слишком большой. Максимальный размер: 10MB');
+                return;
+            }
+
+            fileName.textContent = file.name;
+            fileSize.textContent = formatFileSize(file.size);
+            fileInfo.style.display = 'flex';
+            fileUploadArea.querySelector('.upload-placeholder').style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    }
+
+    function formatFileSize(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+
+    // Form submission
+    uploadForm.addEventListener('submit', function() {
+        const btnText = submitBtn.querySelector('.btn-text');
+        const btnSpinner = submitBtn.querySelector('.btn-spinner');
+        
+        btnText.style.display = 'none';
+        btnSpinner.style.display = 'block';
+        submitBtn.disabled = true;
+    });
+});
+</script>
+{% endblock %}
