@@ -1,8 +1,10 @@
-// Mobile menu toggle и основная логика
+// main.js - только основная логика
 document.addEventListener('DOMContentLoaded', function() {
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
+    const header = document.querySelector('.main-header');
 
+    // Mobile menu toggle
     if (hamburger) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
@@ -13,15 +15,47 @@ document.addEventListener('DOMContentLoaded', function() {
     // Smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            const href = this.getAttribute('href');
+            if (href !== '#') {
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    // Закрываем мобильное меню если открыто
+                    if (hamburger && navMenu) {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    }
+                    
+                    const headerHeight = header ? header.offsetHeight : 0;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    window.scrollTo({
+                        top: targetPosition - headerHeight,
+                        behavior: 'smooth'
+                    });
+                }
             }
         });
+    });
+
+    // Header scroll effect
+    let lastScrollY = window.scrollY;
+    const headerHeight = header ? header.offsetHeight : 0;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Hide header on scroll down, show on scroll up
+        if (window.scrollY > lastScrollY && window.scrollY > 200) {
+            header.classList.add('hidden');
+        } else {
+            header.classList.remove('hidden');
+        }
+
+        lastScrollY = window.scrollY;
     });
 
     // Add scroll animations
@@ -54,11 +88,11 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Инициализация Telegram обратной связи - ВНУТРИ одного DOMContentLoaded
+    // Инициализация Telegram обратной связи
     initializeTelegramFeedback();
 });
 
-// Добавляем стили для анимаций ОДИН РАЗ
+// Добавляем стили для анимаций
 const style = document.createElement('style');
 style.textContent = `
     .feature-card,
@@ -73,53 +107,10 @@ style.textContent = `
         opacity: 1;
         transform: translateY(0);
     }
-
-    .hamburger.active span:nth-child(1) {
-        transform: rotate(-45deg) translate(-5px, 6px);
-    }
-
-    .hamburger.active span:nth-child(2) {
-        opacity: 0;
-    }
-
-    .hamburger.active span:nth-child(3) {
-        transform: rotate(45deg) translate(-5px, -6px);
-    }
-
-    @media (max-width: 768px) {
-        .nav-menu {
-            position: fixed;
-            left: -100%;
-            top: 70px;
-            flex-direction: column;
-            background-color: var(--white);
-            width: 100%;
-            text-align: center;
-            transition: 0.3s;
-            box-shadow: var(--shadow);
-            padding: 2rem 0;
-        }
-
-        .nav-menu.active {
-            left: 0;
-        }
-    }
-
-    /* Стили для уведомлений Telegram */
-    @keyframes slideInRight {
-        from {
-            opacity: 0;
-            transform: translateX(100%);
-        }
-        to {
-            opacity: 1;
-            transform: translateX(0);
-        }
-    }
 `;
 document.head.appendChild(style);
 
-// Telegram обратная связь - ВНЕ DOMContentLoaded
+// Telegram обратная связь
 function initializeTelegramFeedback() {
     const feedbackBtn = document.getElementById('feedbackBtn');
     const feedbackModal = document.getElementById('feedbackModal');
@@ -133,10 +124,8 @@ function initializeTelegramFeedback() {
             if (feedbackModal) {
                 feedbackModal.style.display = 'block';
                 document.body.style.overflow = 'hidden';
-            } else {
             }
         });
-    } else {
     }
 
     // Закрытие модального окна
@@ -170,46 +159,36 @@ function initializeTelegramFeedback() {
     });
 }
 
-// Функции для открытия Telegram
 function openTelegram(type) {
-
-    // ЗАМЕНИ эти ссылки на свои!
     const telegramUrls = {
-        direct: 'https://t.me/KlimovOE' // Твой Telegram username
+        direct: 'https://t.me/KlimovOE',
+        group: 'https://t.me/your_support_group' // Замените на вашу группу
     };
 
     const url = telegramUrls[type];
     if (url) {
-        // Открываем Telegram в новой вкладке
         window.open(url, '_blank', 'noopener,noreferrer');
-
-        // Показываем уведомление
-        showNotification(type === 'direct'
-            ? 'Открываю Telegram...'
+        
+        showNotification(type === 'direct' 
+            ? 'Открываю Telegram...' 
             : 'Открываю группу поддержки...');
 
-        // Закрываем модальное окно
         const feedbackModal = document.getElementById('feedbackModal');
         if (feedbackModal) {
             feedbackModal.style.display = 'none';
             document.body.style.overflow = 'auto';
         }
-    } else {
     }
 }
 
-// Функция для быстрого сообщения (для баннера)
 function sendQuickMessage() {
     const message = "Привет! У меня вопрос по отчету эффективность.рф";
-    // ЗАМЕНИ на свой username
     const telegramUrl = `https://t.me/KlimovOE?text=${encodeURIComponent(message)}`;
     window.open(telegramUrl, '_blank', 'noopener,noreferrer');
     showNotification('Открываю Telegram с готовым сообщением...');
 }
 
-// Вспомогательная функция для уведомлений
 function showNotification(message) {
-    // Удаляем существующие уведомления
     const existingNotification = document.querySelector('.feedback-notification');
     if (existingNotification) {
         existingNotification.remove();
@@ -219,9 +198,9 @@ function showNotification(message) {
     notification.className = 'feedback-notification';
     notification.style.cssText = `
         position: fixed;
-        top: 20px;
+        top: 100px;
         right: 20px;
-        background: var(--success);
+        background: var(--gradient-secondary);
         color: white;
         padding: 15px 20px;
         border-radius: 10px;
@@ -239,4 +218,3 @@ function showNotification(message) {
         }
     }, 3000);
 }
-

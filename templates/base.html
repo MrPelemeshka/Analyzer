@@ -7,8 +7,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
-    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.svg') }}">
     <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo.svg') }}">
 </head>
@@ -24,7 +22,7 @@
     <!-- Footer -->
     {% include 'includes/footer.html' %}
 
-    <!-- Добавь перед закрывающим </body> -->
+    <!-- Telegram Feedback -->
     <div class="feedback-floating">
         <button class="feedback-btn" id="feedbackBtn">
             <i class="fab fa-telegram"></i>
@@ -54,6 +52,11 @@
                     <div class="option-icon">
                         <i class="fas fa-users"></i>
                     </div>
+                    <div class="option-content">
+                        <h4>Группа поддержки</h4>
+                        <p>Присоединиться к группе пользователей</p>
+                    </div>
+                    <i class="fas fa-chevron-right"></i>
                 </div>
 
                 <div class="telegram-info">
@@ -64,54 +67,7 @@
         </div>
     </div>
 
-    <script>
-    function testModal() {
-        const modal = document.getElementById('feedbackModal');
-        console.log('TEST: Showing modal', modal);
-        modal.style.display = 'block';
-        document.body.style.overflow = 'hidden';
-
-        // Дополнительная проверка
-        console.log('Modal computed style:', window.getComputedStyle(modal).display);
-        console.log('Modal position:', modal.getBoundingClientRect());
-    }
-
-    function hideModal() {
-        const modal = document.getElementById('feedbackModal');
-        modal.style.display = 'none';
-        document.body.style.overflow = 'auto';
-    }
-    </script>
-
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
-    <script>
-        // Инициализация после загрузки DOM
-        document.addEventListener('DOMContentLoaded', function() {
-            // Инициализация меню
-            const hamburger = document.querySelector('.hamburger');
-            const navMenu = document.querySelector('.nav-menu');
-
-            if (hamburger && navMenu) {
-                hamburger.addEventListener('click', function() {
-                    hamburger.classList.toggle('active');
-                    navMenu.classList.toggle('active');
-                });
-
-                // Закрытие меню при клике на ссылку
-                navMenu.querySelectorAll('.nav-link').forEach(link => {
-                    link.addEventListener('click', () => {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                    });
-                });
-            }
-
-            // Инициализация Telegram
-            initializeTelegramFeedback();
-        });
-    </script>
     {% block scripts %}{% endblock %}
-
-
 </body>
 </html>
