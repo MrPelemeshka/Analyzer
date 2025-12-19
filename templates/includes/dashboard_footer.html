@@ -23,3 +23,60 @@
         </div>
     </div>
 </footer>
+<script>
+    // Функция для преобразования любого времени в московское
+    function convertToMoscowTime(element) {
+        // Парсим время из текста
+        const text = element.textContent || element.innerText;
+        const regex = /(\d{2})[.\/](\d{2})[.\/](\d{4})\s+(\d{2}):(\d{2})/;
+        const match = text.match(regex);
+
+        if (!match) return null;
+
+        const [, day, month, year, hour, minute] = match;
+
+        // Создаем дату (предполагаем, что сервер в UTC)
+        const serverDate = new Date(Date.UTC(year, month - 1, day, hour, minute, 0));
+
+        // Добавляем 3 часа для Московского времени
+        const moscowDate = new Date(serverDate.getTime());
+
+        // Форматируем
+        const formattedDate = moscowDate.toLocaleDateString('ru-RU', {
+            day: '2-digit',
+            month: '2-digit',
+            year: 'numeric'
+        });
+
+        const formattedTime = moscowDate.toLocaleTimeString('ru-RU', {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: false
+        });
+
+        return `${formattedDate} ${formattedTime}`;
+    }
+
+    // Обновляем все временные метки
+    function updateAllTimestamps() {
+        const timestamps = document.querySelectorAll('.timestamp, .meta-item, [data-time]');
+
+        timestamps.forEach(element => {
+            const moscowTime = convertToMoscowTime(element);
+            if (moscowTime) {
+                if (element.classList.contains('timestamp')) {
+                    element.innerHTML = `Время создания: <strong>${moscowTime} (МСК)</strong>`;
+                } else if (element.classList.contains('meta-item')) {
+                    const icon = element.querySelector('i');
+                    const currentText = element.querySelector('span');
+                    if (currentText && currentText.textContent.includes('Создан:')) {
+                        currentText.textContent = `Создан: ${moscowTime}`;
+                    }
+                }
+            }
+        });
+    }
+
+    // Инициализируем при загрузке
+    document.addEventListener('DOMContentLoaded', updateAllTimestamps);
+</script>

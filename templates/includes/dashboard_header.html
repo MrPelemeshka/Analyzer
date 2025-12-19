@@ -9,27 +9,27 @@
             <div class="report-meta">
                 <span class="meta-item">
                     <i class="fas fa-calendar"></i>
-                    Создан: {{ current_time }}
+                    <span>Создан: {{ current_time }}</span>
                 </span>
                 <span class="meta-item">
                     <i class="fas fa-database"></i>
-                    Записей: {{ records_count }}
+                    <span>Записей: {{ records_count }}</span>
                 </span>
                 <span class="meta-item">
                     <i class="fas fa-cogs"></i>
-                    Оборудование: {{ equipment_count }} ед.
+                    <span>Оборудование: {{ equipment_count }} ед.</span>
                 </span>
             </div>
         </div>
     </div>
     <div class="dashboard-actions">
-        <button class="btn-print" onclick="window.print()">
+        <button class="btn-print" onclick="window.print()" title="Печать отчета">
             <i class="fas fa-print"></i>
-            Печать
+            <span>Печать</span>
         </button>
-        <button class="btn-expand" id="toggleFullscreen">
+        <button class="btn-expand" id="toggleFullscreen" title="Полноэкранный режим">
             <i class="fas fa-expand"></i>
-            Полный экран
+            <span>Полный экран</span>
         </button>
     </div>
 </header>
