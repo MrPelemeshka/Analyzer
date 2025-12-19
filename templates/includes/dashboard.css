@@ -1,4 +1,4 @@
-/* DASHBOARD.CSS - ПОЛНАЯ ВЕРСИЯ */
+/* DASHBOARD.CSS - ОПТИМИЗИРОВАННАЯ ВЕРСИЯ */
 * {
     box-sizing: border-box;
     margin: 0;
@@ -9,6 +9,8 @@ html, body {
     overflow-x: hidden;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
     scroll-behavior: smooth;
+    font-size: 16px;
+    line-height: 1.6;
 }
 
 /* ЦВЕТОВАЯ ПАЛИТРА БРЕНДА */
@@ -50,6 +52,17 @@ html, body {
     --transition-fast: 0.2s ease;
     --transition-normal: 0.3s ease;
     --transition-slow: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Размеры шрифтов */
+    --font-xs: 0.875rem;    /* 14px */
+    --font-sm: 0.9375rem;   /* 15px */
+    --font-base: 1rem;      /* 16px */
+    --font-md: 1.125rem;    /* 18px */
+    --font-lg: 1.25rem;     /* 20px */
+    --font-xl: 1.5rem;      /* 24px */
+    --font-2xl: 1.875rem;   /* 30px */
+    --font-3xl: 2.25rem;    /* 36px */
+    --font-4xl: 3rem;       /* 48px */
 }
 
 /* ОСНОВНОЙ ФОН */
@@ -62,6 +75,7 @@ html, body {
     overflow-x: hidden;
     color: var(--neutrals3);
     line-height: 1.6;
+    font-size: var(--font-base);
 }
 
 /* КОНТЕЙНЕР */
@@ -72,19 +86,19 @@ html, body {
     box-sizing: border-box;
 }
 
-/* ШАПКА - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* ШАПКА - ОПТИМИЗИРОВАННАЯ */
 .dashboard-header {
     background: var(--neutrals1);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-lg);
-    padding: 2rem 2.8rem;
-    margin-bottom: 2.5rem;
+    padding: 1.5rem 2rem;
+    margin-bottom: 2rem;
     box-shadow: var(--shadow-heavy);
     display: flex;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
     flex-wrap: wrap;
-    gap: 2rem;
+    gap: 1.5rem;
     border: 3px solid rgba(88, 160, 252, 0.2);
     width: 100%;
     position: relative;
@@ -103,11 +117,11 @@ html, body {
     border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
-/* БРЕНД - ИСПРАВЛЕННАЯ ВЕРСИЯ */
+/* БРЕНД */
 .dashboard-brand {
     display: flex;
     align-items: center;
-    gap: 2rem;
+    gap: 1.5rem;
     flex: 1;
     min-width: 300px;
 }
@@ -118,12 +132,12 @@ html, body {
     align-items: center;
     gap: 0.75rem;
     font-weight: 800;
-    font-size: 1.5rem;
+    font-size: var(--font-xl);
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    padding: 0.75rem 1.5rem;
+    padding: 0.75rem 1.25rem;
     border-radius: var(--radius-xl);
     border: 2px solid rgba(88, 160, 252, 0.3);
     box-shadow: var(--shadow-medium);
@@ -138,22 +152,22 @@ html, body {
 }
 
 .brand-logo i {
-    font-size: 1.5rem;
+    font-size: var(--font-lg);
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
 }
 
-/* ИНФОРМАЦИЯ ОТЧЕТА - ИСПРАВЛЕННАЯ */
+/* ИНФОРМАЦИЯ ОТЧЕТА */
 .report-info {
     flex: 2;
     min-width: 300px;
 }
 
 .report-info h1 {
-    margin: 0 0 1.2rem 0;
-    font-size: 2rem;
+    margin: 0 0 1rem 0;
+    font-size: var(--font-2xl);
     font-weight: 800;
     background: linear-gradient(135deg, var(--secondary3), var(--secondary2), var(--secondary1));
     -webkit-background-clip: text;
@@ -168,7 +182,7 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     gap: 0.75rem;
-    margin-top: 0.5rem;
+    margin-top: 0.75rem;
 }
 
 .meta-item {
@@ -178,21 +192,24 @@ html, body {
     color: var(--secondary3);
     font-weight: 600;
     background: var(--neutrals1);
-    padding: 0.5rem 1rem;
+    padding: 0.5rem 0.875rem;
     border-radius: 20px;
     border: 1.5px solid rgba(88, 160, 252, 0.2);
     box-shadow: var(--shadow-light);
     transition: all var(--transition-normal);
-    font-size: 0.9rem;
+    font-size: var(--font-sm);
     white-space: nowrap;
 }
 
-/* КНОПКИ ДЕЙСТВИЙ - ИСПРАВЛЕННЫЕ */
+.meta-item i {
+    font-size: var(--font-sm);
+}
+
+/* КНОПКИ ДЕЙСТВИЙ */
 .dashboard-actions {
     display: flex;
     gap: 0.75rem;
     flex-shrink: 0;
-    margin-top: 0;
     align-self: flex-start;
 }
 
@@ -210,36 +227,21 @@ html, body {
     color: var(--neutrals1);
     border: 2px solid rgba(255, 255, 255, 0.3);
     box-shadow: var(--shadow-medium);
-    font-size: 0.9rem;
+    font-size: var(--font-sm);
     min-width: auto;
-}
-
-.btn-print::before, .btn-expand::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    height: 100%;
-    background: linear-gradient(90deg,
-        transparent,
-        rgba(255, 255, 255, 0.3),
-        transparent);
-    transition: left 0.8s ease;
+    position: relative;
+    overflow: hidden;
 }
 
 .btn-print:hover, .btn-expand:hover {
     background: var(--gradient-main);
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-3px) scale(1.03);
     box-shadow: var(--shadow-hover);
     border-color: rgba(255, 255, 255, 0.6);
 }
 
-.btn-print:hover::before, .btn-expand:hover::before {
-    left: 100%;
-}
-
 .btn-print i, .btn-expand i {
-    font-size: 1.1rem;
+    font-size: var(--font-base);
     transition: transform var(--transition-slow);
 }
 
@@ -252,8 +254,8 @@ html, body {
     background: var(--gradient-card);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-lg);
-    padding: 3rem;
-    margin-bottom: 3rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
     box-shadow: var(--shadow-heavy);
     border: 3px solid rgba(88, 160, 252, 0.2);
     transition: all var(--transition-slow);
@@ -277,14 +279,14 @@ html, body {
 }
 
 .block:hover {
-    transform: translateY(-10px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-hover);
     border-color: rgba(88, 160, 252, 0.4);
 }
 
 .block h2 {
-    margin-bottom: 2rem;
-    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+    font-size: var(--font-xl);
     font-weight: 800;
     padding-bottom: 1rem;
     display: flex;
@@ -314,7 +316,7 @@ html, body {
 }
 
 .block h2 i {
-    font-size: 1.5rem;
+    font-size: var(--font-lg);
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
@@ -323,7 +325,7 @@ html, body {
 }
 
 .block:hover h2::after {
-    width: 120px;
+    width: 100px;
 }
 
 /* Анимации появления блоков */
@@ -354,49 +356,15 @@ html, body {
 .block:nth-child(3) { animation-delay: 0.3s; }
 .block:nth-child(4) { animation-delay: 0.4s; }
 
-/* ИКОНКИ ДЛЯ ЗАГОЛОВКОВ БЛОКОВ */
-.block:nth-child(1) h2::before {
-    content: '📅';
-    font-size: 1.8rem;
-    background: var(--gradient-blue);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: float 3s ease-in-out infinite;
-}
-
-.block:nth-child(2) h2::before {
-    content: '📊';
-    font-size: 1.8rem;
-    animation: float 3s ease-in-out infinite 0.5s;
-}
-
-.block:nth-child(3) h2::before {
-    content: '📋';
-    font-size: 1.8rem;
-    animation: float 3s ease-in-out infinite 1s;
-}
-
-.block:nth-child(4) h2::before {
-    content: '📈';
-    font-size: 1.8rem;
-    animation: float 3s ease-in-out infinite 1.5s;
-}
-
-@keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
-}
-
 /* ПАНЕЛИ УПРАВЛЕНИЯ */
 .controls-panel {
     background: var(--gradient-light);
-    padding: 2.5rem;
+    padding: 1.5rem;
     border-radius: var(--radius-md);
-    margin-bottom: 2.5rem;
+    margin-bottom: 1.5rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
     border: 3px solid rgba(88, 160, 252, 0.25);
     backdrop-filter: blur(10px);
     box-shadow: var(--shadow-medium);
@@ -420,19 +388,19 @@ html, body {
 .control-group {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 0.75rem;
     position: relative;
 }
 
 .control-group label {
-    font-weight: 700;
+    font-weight: 600;
     color: var(--secondary3);
-    font-size: 1rem;
-    letter-spacing: 0.5px;
+    font-size: var(--font-base);
+    letter-spacing: 0.3px;
     display: flex;
     align-items: center;
-    gap: 0.85rem;
-    padding: 0.5rem 1rem;
+    gap: 0.75rem;
+    padding: 0.5rem 0.875rem;
     background: rgba(255, 255, 255, 0.8);
     border-radius: var(--radius-sm);
     border: 2px solid rgba(88, 160, 252, 0.2);
@@ -447,23 +415,23 @@ html, body {
 
 .control-group label i {
     color: var(--secondary2);
-    font-size: 1.1rem;
-    width: 24px;
+    font-size: var(--font-base);
+    width: 20px;
     text-align: center;
 }
 
 .control-select, .control-group input {
-    padding: 1.2rem 1.5rem;
-    border: 3px solid rgba(88, 160, 252, 0.3);
+    padding: 0.875rem 1.25rem;
+    border: 2px solid rgba(88, 160, 252, 0.3);
     border-radius: var(--radius-sm);
-    font-size: 1rem;
+    font-size: var(--font-base);
     background: linear-gradient(135deg, var(--neutrals1), var(--neutrals2));
     transition: all var(--transition-slow);
     font-family: inherit;
     width: 100%;
     box-sizing: border-box;
     color: var(--secondary3);
-    font-weight: 600;
+    font-weight: 500;
     box-shadow: var(--shadow-light);
     position: relative;
 }
@@ -471,24 +439,24 @@ html, body {
 .control-select:focus, .control-group input:focus {
     outline: none;
     border-color: var(--secondary2);
-    box-shadow: 0 0 0 4px rgba(88, 160, 252, 0.2),
+    box-shadow: 0 0 0 3px rgba(88, 160, 252, 0.2),
                 var(--shadow-medium);
     background: var(--neutrals1);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 .control-select:hover, .control-group input:hover {
     border-color: var(--secondary2);
     box-shadow: var(--shadow-medium);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 .control-select {
     appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23217FF9' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23217FF9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
     background-repeat: no-repeat;
-    background-position: right 1.5rem center;
-    background-size: 1.2em;
+    background-position: right 1rem center;
+    background-size: 1em;
     cursor: pointer;
 }
 
@@ -496,11 +464,11 @@ html, body {
 .chart-container {
     position: relative;
     width: 100%;
-    margin-bottom: 3rem;
-    min-height: 600px;
+    margin-bottom: 2rem;
+    min-height: 400px;
     background: var(--neutrals1);
     border-radius: var(--radius-md);
-    padding: 2.5rem;
+    padding: 1.5rem;
     box-shadow: var(--shadow-heavy);
     border: 3px solid rgba(216, 230, 248, 0.8);
     box-sizing: border-box;
@@ -517,10 +485,10 @@ html, body {
 .status-legend {
     display: flex;
     flex-wrap: wrap;
-    gap: 1.5rem;
+    gap: 1rem;
     justify-content: center;
-    margin: 2.5rem 0;
-    padding: 2rem;
+    margin: 1.5rem 0;
+    padding: 1.5rem;
     background: var(--gradient-light);
     border-radius: var(--radius-md);
     border: 3px solid rgba(88, 160, 252, 0.25);
@@ -532,15 +500,15 @@ html, body {
 .status-item {
     display: flex;
     align-items: center;
-    gap: 1rem;
-    font-size: 0.95rem;
-    font-weight: 700;
+    gap: 0.75rem;
+    font-size: var(--font-sm);
+    font-weight: 600;
     background: var(--neutrals1);
-    padding: 0.85rem 1.7rem;
+    padding: 0.75rem 1.25rem;
     border-radius: var(--radius-xl);
     box-shadow: var(--shadow-light);
-    border: 3px solid rgba(88, 160, 252, 0.2);
-    transition: all var(--transition-slow);
+    border: 2px solid rgba(88, 160, 252, 0.2);
+    transition: all var(--transition-normal);
     cursor: pointer;
     position: relative;
     overflow: hidden;
@@ -560,32 +528,32 @@ html, body {
 }
 
 .status-item:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-3px) scale(1.03);
     box-shadow: var(--shadow-hover);
     border-color: var(--secondary2);
 }
 
 .status-color {
-    width: 24px;
-    height: 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    width: 20px;
+    height: 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
     flex-shrink: 0;
-    border: 3px solid rgba(255, 255, 255, 0.9);
+    border: 2px solid rgba(255, 255, 255, 0.9);
     position: relative;
     z-index: 2;
     transition: transform var(--transition-slow);
 }
 
 .status-item:hover .status-color {
-    transform: rotate(15deg) scale(1.2);
+    transform: rotate(15deg) scale(1.1);
 }
 
 /* ТАБЛИЦЫ */
 .table-container {
     overflow-x: auto;
-    margin: 2.5rem 0;
-    max-height: 700px;
+    margin: 1.5rem 0;
+    max-height: 500px;
     overflow-y: auto;
     background: var(--neutrals1);
     border-radius: var(--radius-md);
@@ -596,8 +564,8 @@ html, body {
 }
 
 .table-container::-webkit-scrollbar {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
 }
 
 .table-container::-webkit-scrollbar-track {
@@ -608,7 +576,7 @@ html, body {
 .table-container::-webkit-scrollbar-thumb {
     background: var(--gradient-blue);
     border-radius: var(--radius-sm);
-    border: 3px solid var(--neutrals2);
+    border: 2px solid var(--neutrals2);
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
@@ -620,8 +588,8 @@ html, body {
     border-collapse: separate;
     border-spacing: 0;
     background: var(--neutrals1);
-    font-size: 0.95rem;
-    min-width: 800px;
+    font-size: var(--font-sm);
+    min-width: 700px;
 }
 
 .compact-table thead {
@@ -633,12 +601,12 @@ html, body {
 
 .compact-table th {
     color: var(--neutrals1);
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     text-align: left;
-    font-weight: 800;
-    font-size: 1rem;
-    letter-spacing: 0.5px;
-    border-right: 2px solid rgba(255, 255, 255, 0.2);
+    font-weight: 700;
+    font-size: var(--font-base);
+    letter-spacing: 0.3px;
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
     position: relative;
     text-transform: uppercase;
 }
@@ -654,17 +622,17 @@ html, body {
     left: 50%;
     transform: translateX(-50%);
     width: 50%;
-    height: 4px;
-    background: rgba(255, 255, 255, 0.5);
+    height: 3px;
+    background: rgba(255, 255, 255, 0.4);
     border-radius: 2px;
 }
 
 .compact-table td {
-    padding: 1.2rem 2rem;
+    padding: 1rem 1.5rem;
     text-align: left;
-    border-bottom: 3px solid rgba(216, 230, 248, 0.6);
+    border-bottom: 2px solid rgba(216, 230, 248, 0.6);
     color: var(--neutrals3);
-    font-weight: 600;
+    font-weight: 500;
     background: var(--neutrals1);
     transition: all var(--transition-normal);
     position: relative;
@@ -676,7 +644,7 @@ html, body {
     left: 0;
     top: 0;
     height: 100%;
-    width: 4px;
+    width: 3px;
     background: var(--secondary2);
     transform: scaleY(0);
     transition: transform var(--transition-normal);
@@ -686,7 +654,7 @@ html, body {
     background: linear-gradient(90deg,
         rgba(88, 160, 252, 0.1),
         rgba(216, 230, 248, 0.4));
-    transform: translateX(5px);
+    transform: translateX(3px);
 }
 
 .compact-table tr:hover td::before {
@@ -708,21 +676,21 @@ html, body {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    gap: 3rem;
-    padding: 1.5rem;
+    gap: 1.5rem;
+    padding: 1rem;
     width: 100%;
-    min-height: 650px;
+    min-height: 500px;
 }
 
 .pie-chart-with-legend {
     text-align: center;
-    margin: 1rem;
-    padding: 2.5rem;
+    margin: 0.5rem;
+    padding: 1.5rem;
     background: var(--gradient-light);
     border-radius: var(--radius-md);
     box-shadow: var(--shadow-heavy);
     border: 3px solid rgba(88, 160, 252, 0.25);
-    min-width: 400px;
+    min-width: 350px;
     transition: all var(--transition-slow);
     box-sizing: border-box;
     position: relative;
@@ -735,24 +703,24 @@ html, body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 6px;
+    height: 5px;
     background: var(--gradient-blue);
 }
 
 .pie-chart-with-legend:hover {
-    transform: translateY(-12px) scale(1.02);
+    transform: translateY(-5px) scale(1.02);
     box-shadow: var(--shadow-hover);
     border-color: var(--secondary2);
 }
 
 .pie-chart-with-legend > div:first-child {
-    font-size: 1.5rem;
-    font-weight: 800;
+    font-size: var(--font-lg);
+    font-weight: 700;
     color: var(--secondary3);
     text-align: center;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 3px solid rgba(88, 160, 252, 0.3);
+    margin-bottom: 1rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid rgba(88, 160, 252, 0.3);
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
@@ -762,21 +730,21 @@ html, body {
 /* СЕТКА СТАТИСТИКИ (БЛОК 4) */
 .stats-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 2rem;
-    margin: 3rem 0;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.5rem;
+    margin: 2rem 0;
     width: 100%;
 }
 
 .stat-card {
     background: var(--gradient-card);
-    padding: 2.5rem;
+    padding: 1.5rem;
     border-radius: var(--radius-md);
-    border-left: 8px solid var(--secondary2);
+    border-left: 6px solid var(--secondary2);
     text-align: center;
     box-shadow: var(--shadow-heavy);
     transition: all var(--transition-slow);
-    border: 3px solid rgba(88, 160, 252, 0.2);
+    border: 2px solid rgba(88, 160, 252, 0.2);
     position: relative;
     overflow: hidden;
     animation: pulseCard 2s infinite;
@@ -784,7 +752,7 @@ html, body {
 
 @keyframes pulseCard {
     0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-5px); }
+    50% { transform: translateY(-3px); }
 }
 
 .stat-card::before {
@@ -801,36 +769,36 @@ html, body {
 }
 
 .stat-card:hover {
-    transform: translateY(-12px) scale(1.05);
+    transform: translateY(-5px) scale(1.03);
     box-shadow: var(--shadow-hover);
     border-color: var(--secondary2);
     border-left-color: var(--secondary1);
 }
 
 .stat-value {
-    font-size: 3.5rem;
-    font-weight: 900;
+    font-size: var(--font-3xl);
+    font-weight: 800;
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-    margin-bottom: 1rem;
-    line-height: 1;
-    text-shadow: 0 4px 12px rgba(11, 77, 162, 0.2);
+    margin-bottom: 0.75rem;
+    line-height: 1.1;
+    text-shadow: 0 4px 8px rgba(11, 77, 162, 0.2);
     position: relative;
     z-index: 2;
 }
 
 .stat-label {
-    font-size: 1.1rem;
+    font-size: var(--font-base);
     color: var(--secondary3);
-    font-weight: 700;
-    letter-spacing: 0.5px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
     background: rgba(216, 230, 248, 0.8);
-    padding: 0.75rem 1.5rem;
+    padding: 0.5rem 1rem;
     border-radius: var(--radius-xl);
     display: inline-block;
-    border: 2px solid rgba(88, 160, 252, 0.3);
+    border: 1px solid rgba(88, 160, 252, 0.3);
     position: relative;
     z-index: 2;
     transition: all var(--transition-normal);
@@ -839,18 +807,18 @@ html, body {
 .stat-card:hover .stat-label {
     background: var(--neutrals1);
     border-color: var(--secondary2);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* СЕКЦИЯ ПРОИЗВОДИТЕЛЬНОСТИ (БЛОК 4) */
 .productivity-section {
-    margin-top: 4rem;
-    padding: 3rem;
+    margin-top: 2.5rem;
+    padding: 2rem;
     background: var(--gradient-card);
     border-radius: var(--radius-lg);
     box-shadow: var(--shadow-heavy);
     border: 3px solid rgba(88, 160, 252, 0.25);
-    border-left: 8px solid var(--secondary2);
+    border-left: 6px solid var(--secondary2);
     position: relative;
     overflow: hidden;
 }
@@ -861,25 +829,25 @@ html, body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 6px;
+    height: 5px;
     background: var(--gradient-blue);
 }
 
 .section-title {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     text-align: center;
     position: relative;
 }
 
 .section-title h3 {
     color: var(--secondary3);
-    font-size: 2rem;
-    font-weight: 900;
+    font-size: var(--font-xl);
+    font-weight: 800;
     margin: 0;
-    padding-bottom: 1.5rem;
+    padding-bottom: 1rem;
     display: inline-flex;
     align-items: center;
-    gap: 1.5rem;
+    gap: 1rem;
     position: relative;
     background: var(--gradient-blue);
     -webkit-background-clip: text;
@@ -893,17 +861,17 @@ html, body {
     bottom: 0;
     left: 50%;
     transform: translateX(-50%);
-    width: 100px;
-    height: 6px;
+    width: 80px;
+    height: 4px;
     background: var(--secondary2);
-    border-radius: 3px;
+    border-radius: 2px;
 }
 
 .section-title i {
     color: var(--secondary2);
-    font-size: 1.8rem;
+    font-size: var(--font-lg);
     background: rgba(88, 160, 252, 0.15);
-    padding: 1rem;
+    padding: 0.75rem;
     border-radius: 50%;
     animation: spin 4s linear infinite;
 }
@@ -916,17 +884,17 @@ html, body {
 /* КАРТОЧКИ ПРОИЗВОДИТЕЛЬНОСТИ */
 .productivity-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 2.5rem;
-    margin-bottom: 4rem;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
 }
 
 .productivity-card, .trend-card {
     background: var(--gradient-light);
     border-radius: var(--radius-md);
-    padding: 3rem;
+    padding: 1.5rem;
     text-align: center;
-    border: 3px solid rgba(88, 160, 252, 0.25);
+    border: 2px solid rgba(88, 160, 252, 0.25);
     box-shadow: var(--shadow-heavy);
     transition: all var(--transition-slow);
     position: relative;
@@ -947,26 +915,26 @@ html, body {
 }
 
 .productivity-card:hover, .trend-card:hover {
-    transform: translateY(-15px) scale(1.03);
+    transform: translateY(-5px) scale(1.02);
     box-shadow: var(--shadow-hover);
     border-color: var(--secondary2);
 }
 
 .productivity-value, .trend-value {
-    font-size: 4rem;
-    font-weight: 900;
-    margin: 2rem 0;
-    line-height: 1;
+    font-size: var(--font-3xl);
+    font-weight: 800;
+    margin: 1.5rem 0;
+    line-height: 1.1;
     position: relative;
     z-index: 2;
-    text-shadow: 0 6px 15px rgba(11, 77, 162, 0.2);
+    text-shadow: 0 4px 8px rgba(11, 77, 162, 0.2);
     animation: countUp 1.5s ease-out;
 }
 
 @keyframes countUp {
     from {
         opacity: 0;
-        transform: translateY(20px) scale(0.5);
+        transform: translateY(15px) scale(0.8);
     }
     to {
         opacity: 1;
@@ -975,26 +943,26 @@ html, body {
 }
 
 .productivity-label, .trend-label {
-    font-size: 1.3rem;
+    font-size: var(--font-md);
     color: var(--secondary3);
-    font-weight: 800;
-    margin-bottom: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
     position: relative;
     z-index: 2;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.3px;
 }
 
 .productivity-details, .trend-details {
-    font-size: 1rem;
+    font-size: var(--font-sm);
     color: var(--secondary3);
-    font-weight: 600;
+    font-weight: 500;
     position: relative;
     z-index: 2;
     background: rgba(216, 230, 248, 0.8);
-    padding: 1rem 2rem;
+    padding: 0.75rem 1.25rem;
     border-radius: var(--radius-xl);
     display: inline-block;
-    border: 2px solid rgba(88, 160, 252, 0.3);
+    border: 1px solid rgba(88, 160, 252, 0.3);
     transition: all var(--transition-normal);
 }
 
@@ -1002,7 +970,7 @@ html, body {
 .trend-card:hover .trend-details {
     background: var(--neutrals1);
     border-color: var(--secondary2);
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
 /* ТАБЛИЦА ПРОИЗВОДИТЕЛЬНОСТИ */
@@ -1010,16 +978,16 @@ html, body {
     background: var(--gradient-light);
     border-radius: var(--radius-md);
     overflow: hidden;
-    border: 3px solid rgba(88, 160, 252, 0.25);
+    border: 2px solid rgba(88, 160, 252, 0.25);
     box-shadow: var(--shadow-heavy);
-    margin-top: 2rem;
+    margin-top: 1.5rem;
 }
 
 .productivity-table {
     width: 100%;
     border-collapse: separate;
     border-spacing: 0;
-    font-size: 1rem;
+    font-size: var(--font-sm);
 }
 
 .productivity-table thead {
@@ -1028,12 +996,12 @@ html, body {
 
 .productivity-table th {
     color: var(--neutrals1);
-    font-weight: 800;
-    padding: 1.8rem 2rem;
+    font-weight: 700;
+    padding: 1rem 1.5rem;
     text-align: left;
-    font-size: 1.1rem;
-    letter-spacing: 0.5px;
-    border-right: 3px solid rgba(255, 255, 255, 0.2);
+    font-size: var(--font-base);
+    letter-spacing: 0.3px;
+    border-right: 2px solid rgba(255, 255, 255, 0.2);
     position: relative;
     text-transform: uppercase;
 }
@@ -1049,21 +1017,21 @@ html, body {
     left: 50%;
     transform: translateX(-50%);
     width: 60%;
-    height: 4px;
+    height: 3px;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 2px;
 }
 
 .productivity-table tbody tr {
     transition: all var(--transition-normal);
-    border-bottom: 3px solid rgba(216, 230, 248, 0.6);
+    border-bottom: 2px solid rgba(216, 230, 248, 0.6);
 }
 
 .productivity-table tbody tr:hover {
     background: linear-gradient(90deg,
         rgba(88, 160, 252, 0.12),
         rgba(216, 230, 248, 0.5));
-    transform: translateX(10px);
+    transform: translateX(5px);
 }
 
 .productivity-table tbody tr:nth-child(even) {
@@ -1077,10 +1045,10 @@ html, body {
 }
 
 .productivity-table td {
-    padding: 1.5rem 2rem;
+    padding: 1rem 1.5rem;
     color: var(--neutrals3);
-    font-weight: 600;
-    border-right: 2px solid rgba(216, 230, 248, 0.4);
+    font-weight: 500;
+    border-right: 1px solid rgba(216, 230, 248, 0.4);
 }
 
 .productivity-table td:last-child {
@@ -1091,19 +1059,19 @@ html, body {
 .productivity-bar-container {
     position: relative;
     width: 100%;
-    height: 36px;
+    height: 28px;
     background: linear-gradient(135deg,
         rgba(216, 230, 248, 0.6),
         rgba(248, 249, 255, 0.8));
-    border-radius: 18px;
+    border-radius: 14px;
     overflow: hidden;
-    border: 3px solid rgba(88, 160, 252, 0.3);
-    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+    border: 2px solid rgba(88, 160, 252, 0.3);
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .productivity-bar {
     height: 100%;
-    border-radius: 15px;
+    border-radius: 12px;
     transition: width 1.5s cubic-bezier(0.4, 0, 0.2, 1);
     min-width: 4%;
     position: relative;
@@ -1135,41 +1103,36 @@ html, body {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 0.95rem;
-    font-weight: 800;
+    font-size: var(--font-sm);
+    font-weight: 700;
     color: var(--secondary3);
-    text-shadow: 0 2px 4px rgba(255, 255, 255, 0.9);
-    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(255, 255, 255, 0.9);
+    letter-spacing: 0.3px;
     z-index: 2;
 }
 
 /* ГРАФИК ТРЕНДА */
 .trend-chart-section {
-    margin-top: 4rem;
-    padding: 2.5rem;
+    margin-top: 2.5rem;
+    padding: 1.5rem;
     background: var(--gradient-light);
     border-radius: var(--radius-md);
-    border: 3px solid rgba(88, 160, 252, 0.25);
+    border: 2px solid rgba(88, 160, 252, 0.25);
     box-shadow: var(--shadow-heavy);
 }
 
 .trend-chart-section h4 {
     color: var(--secondary3);
-    font-size: 1.8rem;
-    font-weight: 800;
-    margin: 0 0 2rem 0;
+    font-size: var(--font-lg);
+    font-weight: 700;
+    margin: 0 0 1.5rem 0;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: 0.75rem;
     background: var(--gradient-blue);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
-}
-
-.trend-chart-section h4::before {
-    content: '📈';
-    font-size: 1.5rem;
 }
 
 /* ПОДВАЛ */
@@ -1177,8 +1140,8 @@ html, body {
     background: var(--gradient-card);
     backdrop-filter: blur(20px);
     border-radius: var(--radius-lg);
-    padding: 3rem;
-    margin-top: 4rem;
+    padding: 2rem;
+    margin-top: 2.5rem;
     box-shadow: var(--shadow-heavy);
     border: 3px solid rgba(88, 160, 252, 0.2);
     width: 100%;
@@ -1201,14 +1164,14 @@ html, body {
 .footer-content {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
-    gap: 3rem;
+    gap: 2rem;
     align-items: center;
     width: 100%;
 }
 
 .footer-brand .brand-logo {
     justify-content: flex-start;
-    font-size: 1.5rem;
+    font-size: var(--font-lg);
     background: none;
     border: none;
     padding: 0;
@@ -1225,31 +1188,32 @@ html, body {
 .footer-brand p {
     color: var(--secondary3);
     font-weight: 500;
-    margin-top: 1rem;
-    font-size: 1rem;
+    margin-top: 0.75rem;
+    font-size: var(--font-sm);
     opacity: 0.9;
 }
 
 .footer-links {
     display: flex;
     flex-direction: column;
-    gap: 1.2rem;
+    gap: 1rem;
 }
 
 .footer-link {
     display: flex;
     align-items: center;
-    gap: 0.85rem;
+    gap: 0.75rem;
     color: var(--secondary3);
     text-decoration: none;
-    font-weight: 700;
+    font-weight: 600;
     transition: all var(--transition-slow);
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
     background: rgba(216, 230, 248, 0.6);
     border: 2px solid rgba(88, 160, 252, 0.2);
     position: relative;
     overflow: hidden;
+    font-size: var(--font-sm);
 }
 
 .footer-link::before {
@@ -1258,7 +1222,7 @@ html, body {
     left: 0;
     top: 0;
     height: 100%;
-    width: 4px;
+    width: 3px;
     background: var(--secondary2);
     transform: scaleY(0);
     transition: transform var(--transition-normal);
@@ -1268,7 +1232,7 @@ html, body {
     color: var(--secondary2);
     background: var(--neutrals1);
     border-color: var(--secondary2);
-    transform: translateX(10px);
+    transform: translateX(5px);
 }
 
 .footer-link:hover::before {
@@ -1277,7 +1241,7 @@ html, body {
 
 .footer-link i {
     color: var(--secondary2);
-    font-size: 1.1rem;
+    font-size: var(--font-base);
     transition: transform var(--transition-normal);
 }
 
@@ -1288,37 +1252,39 @@ html, body {
 .footer-meta {
     text-align: right;
     color: var(--secondary3);
-    font-size: 0.95rem;
+    font-size: var(--font-sm);
 }
 
 .footer-meta p {
-    margin-bottom: 1rem;
+    margin-bottom: 0.75rem;
     font-weight: 500;
     opacity: 0.9;
+    line-height: 1.5;
 }
 
 .timestamp {
-    font-weight: 800;
+    font-weight: 700;
     color: var(--secondary2);
-    margin-top: 1rem;
+    margin-top: 0.75rem;
     background: rgba(216, 230, 248, 0.8);
-    padding: 1rem 1.5rem;
+    padding: 0.75rem 1rem;
     border-radius: var(--radius-sm);
     display: inline-block;
     border: 2px solid rgba(88, 160, 252, 0.3);
     transition: all var(--transition-normal);
+    font-size: var(--font-sm);
 }
 
 .timestamp:hover {
     background: var(--neutrals1);
     border-color: var(--secondary2);
-    transform: translateY(-3px);
+    transform: translateY(-2px);
 }
 
 /* СОСТОЯНИЕ "НЕТ ДАННЫХ" */
 .no-data {
     text-align: center;
-    padding: 5rem;
+    padding: 3rem 2rem;
     color: var(--secondary3);
     font-style: italic;
     background: var(--gradient-light);
@@ -1326,16 +1292,84 @@ html, body {
     border: 3px dashed rgba(88, 160, 252, 0.3);
     width: 100%;
     box-sizing: border-box;
-    font-size: 1.2rem;
+    font-size: var(--font-lg);
     font-weight: 600;
 }
 
 .no-data i {
-    font-size: 4rem;
-    margin-bottom: 1.5rem;
+    font-size: var(--font-4xl);
+    margin-bottom: 1rem;
     color: var(--secondary2);
     opacity: 0.7;
     display: block;
+}
+
+/* УТИЛИТЫ */
+.logo-gradient {
+    background: var(--gradient-blue);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800;
+}
+
+.date-range {
+    text-align: center;
+    margin: 1rem 0;
+    font-weight: 700;
+    color: var(--secondary2);
+    background: rgba(88, 160, 252, 0.15);
+    padding: 1rem;
+    border-radius: var(--radius-sm);
+    border: 2px solid rgba(88, 160, 252, 0.3);
+    font-size: var(--font-base);
+    box-shadow: var(--shadow-light);
+}
+
+/* ПОЛНАЯ ПАЛИТРА ДЛЯ СТАТУСОВ */
+.status-color[style*="Работа"] { background: var(--secondary2) !important; }
+.status-color[style*="Готов к работе"] { background: var(--secondary1) !important; }
+.status-color[style*="Выключен"] { background: var(--secondary4) !important; }
+.status-color[style*="Перегрузка"] { background: #FF6B6B !important; }
+.status-color[style*="Неопределённый"] { background: #666666 !important; }
+
+/* АКТИВНЫЕ СОСТОЯНИЯ */
+.control-select:active,
+.control-group input:active,
+.btn-print:active,
+.btn-expand:active {
+    transform: translateY(1px) scale(0.98);
+    transition: transform 0.1s ease;
+}
+
+/* ПЕЧАТНЫЕ СТИЛИ */
+@media print {
+    .dashboard-body {
+        background: white !important;
+    }
+
+    .block {
+        box-shadow: none !important;
+        border: 2px solid #ddd !important;
+        page-break-inside: avoid;
+    }
+
+    .btn-print, .btn-expand,
+    .controls-panel {
+        display: none !important;
+    }
+
+    h1, h2, h3, h4 {
+        color: #000 !important;
+        background: none !important;
+        -webkit-text-fill-color: #000 !important;
+    }
+
+    .stat-value, .productivity-value, .trend-value {
+        color: #000 !important;
+        background: none !important;
+        -webkit-text-fill-color: #000 !important;
+    }
 }
 
 /* АДАПТИВНОСТЬ */
@@ -1345,30 +1379,30 @@ html, body {
     }
 
     .block {
-        padding: 2.5rem;
+        padding: 1.75rem;
     }
 
     .footer-content {
         grid-template-columns: 1fr 1fr;
-        gap: 2.5rem;
+        gap: 2rem;
     }
 
     .report-info h1 {
-        font-size: 2.4rem;
+        font-size: var(--font-xl);
     }
 }
 
 @media (max-width: 992px) {
     .dashboard-header {
         flex-direction: column;
-        gap: 2.5rem;
+        gap: 1.5rem;
         text-align: center;
-        padding: 2.5rem;
+        padding: 1.5rem;
     }
 
     .dashboard-brand {
         flex-direction: column;
-        gap: 1.5rem;
+        gap: 1.25rem;
         text-align: center;
     }
 
@@ -1384,7 +1418,7 @@ html, body {
     .footer-content {
         grid-template-columns: 1fr;
         text-align: center;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .footer-brand {
@@ -1405,7 +1439,15 @@ html, body {
 
     .controls-panel {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        padding: 2rem;
+        padding: 1.25rem;
+    }
+
+    .stat-value {
+        font-size: var(--font-2xl);
+    }
+
+    .productivity-value, .trend-value {
+        font-size: var(--font-2xl);
     }
 }
 
@@ -1415,58 +1457,67 @@ html, body {
     }
 
     .block {
-        padding: 2rem;
-        margin-bottom: 2rem;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 
     .block h2 {
-        font-size: 1.7rem;
-        flex-direction: column;
-        align-items: flex-start;
+        font-size: var(--font-lg);
+        flex-direction: row;
+        align-items: center;
         gap: 0.75rem;
     }
 
     .controls-panel {
         grid-template-columns: 1fr;
-        padding: 1.5rem;
-        gap: 1.5rem;
+        padding: 1.25rem;
+        gap: 1.25rem;
     }
 
     .chart-container {
-        padding: 1.5rem;
-        min-height: 500px;
+        padding: 1.25rem;
+        min-height: 350px;
     }
 
     .brand-logo {
-        font-size: 1.4rem;
-        padding: 0.85rem 1.7rem;
+        font-size: var(--font-lg);
+        padding: 0.75rem 1.25rem;
     }
 
     .report-info h1 {
-        font-size: 2rem;
+        font-size: var(--font-lg);
     }
 
     .stats-grid {
         grid-template-columns: 1fr;
-        gap: 1.5rem;
+        gap: 1.25rem;
     }
 
     .pie-chart-with-legend {
         min-width: 100%;
-        margin: 1rem 0;
+        margin: 0.5rem 0;
+        padding: 1.25rem;
     }
 
     .productivity-cards {
         grid-template-columns: 1fr;
-        gap: 2rem;
+        gap: 1.5rem;
     }
 
     .productivity-value, .trend-value {
-        font-size: 3rem;
+        font-size: var(--font-xl);
     }
 
     .stat-value {
-        font-size: 2.8rem;
+        font-size: var(--font-xl);
+    }
+
+    .section-title h3 {
+        font-size: var(--font-lg);
+    }
+
+    .trend-chart-section h4 {
+        font-size: var(--font-md);
     }
 }
 
@@ -1476,25 +1527,28 @@ html, body {
     }
 
     .block {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .block h2 {
-        font-size: 1.5rem;
+        font-size: var(--font-md);
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
     }
 
     .chart-container {
         padding: 1rem;
-        min-height: 400px;
+        min-height: 300px;
     }
 
     .brand-logo {
-        font-size: 1.2rem;
-        padding: 0.75rem 1.5rem;
+        font-size: var(--font-md);
+        padding: 0.5rem 1rem;
     }
 
     .report-info h1 {
-        font-size: 1.7rem;
+        font-size: var(--font-md);
     }
 
     .dashboard-actions {
@@ -1504,176 +1558,63 @@ html, body {
 
     .btn-print, .btn-expand {
         width: 100%;
+        font-size: var(--font-base);
+        padding: 0.875rem;
     }
 
     .report-meta {
         flex-direction: column;
         align-items: center;
-        gap: 1rem;
+        gap: 0.75rem;
     }
 
     .meta-item {
         width: 100%;
         justify-content: center;
+        font-size: var(--font-base);
     }
 
     .footer-content {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .productivity-section {
-        padding: 1.5rem;
+        padding: 1.25rem;
     }
 
     .productivity-card, .trend-card {
-        padding: 2rem;
+        padding: 1.25rem;
     }
 
     .productivity-value, .trend-value {
-        font-size: 2.5rem;
+        font-size: var(--font-lg);
+        margin: 1rem 0;
     }
 
     .status-legend {
-        padding: 1.5rem;
-        gap: 1rem;
+        padding: 1rem;
+        gap: 0.75rem;
     }
 
     .status-item {
-        font-size: 0.85rem;
-        padding: 0.75rem 1.5rem;
+        font-size: var(--font-base);
+        padding: 0.75rem 1rem;
+    }
+
+    .footer-link {
+        font-size: var(--font-base);
+    }
+
+    .timestamp {
+        font-size: var(--font-base);
+    }
+
+    :root {
+        --font-xl: 1.25rem;
+        --font-2xl: 1.5rem;
+        --font-3xl: 1.75rem;
+        --font-4xl: 2rem;
     }
 }
-
-/* УТИЛИТЫ */
-.logo-gradient {
-    background: var(--gradient-blue);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    font-weight: 800;
-}
-
-.date-range {
-    text-align: center;
-    margin: 1.5rem 0;
-    font-weight: 800;
-    color: var(--secondary2);
-    background: rgba(88, 160, 252, 0.15);
-    padding: 1.2rem;
-    border-radius: var(--radius-sm);
-    border: 2px solid rgba(88, 160, 252, 0.3);
-    font-size: 1.1rem;
-    box-shadow: var(--shadow-light);
-}
-
-/* ПОЛНАЯ ПАЛИТРА ДЛЯ СТАТУСОВ */
-.status-color[style*="Работа"] { background: var(--secondary2) !important; }
-.status-color[style*="Готов к работе"] { background: var(--secondary1) !important; }
-.status-color[style*="Выключен"] { background: var(--secondary4) !important; }
-.status-color[style*="Перегрузка"] { background: #FF6B6B !important; }
-.status-color[style*="Неопределённый"] { background: #666666 !important; }
-
-/* АКТИВНЫЕ СОСТОЯНИЯ */
-.control-select:active,
-.control-group input:active,
-.btn-print:active,
-.btn-expand:active {
-    transform: translateY(2px) scale(0.98);
-    transition: transform 0.1s ease;
-}
-
-/* ПЕЧАТНЫЕ СТИЛИ */
-@media print {
-    .dashboard-body {
-        background: white !important;
-    }
-
-    .block {
-        box-shadow: none !important;
-        border: 2px solid #ddd !important;
-        page-break-inside: avoid;
-    }
-
-    .btn-print, .btn-expand,
-    .controls-panel {
-        display: none !important;
-    }
-}
-
-/* АДАПТИВНОСТЬ ШАПКИ */
-@media (max-width: 992px) {
-    .dashboard-header {
-        flex-direction: column;
-        align-items: stretch;
-        gap: 1.5rem;
-        padding: 1.5rem;
-    }
-
-    .dashboard-brand {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 1.5rem;
-    }
-
-    .report-info {
-        width: 100%;
-    }
-
-    .dashboard-actions {
-        align-self: stretch;
-        justify-content: center;
-    }
-
-    .btn-print, .btn-expand {
-        flex: 1;
-        justify-content: center;
-    }
-}
-
-@media (max-width: 768px) {
-    .report-info h1 {
-        font-size: 1.6rem;
-        line-height: 1.3;
-    }
-
-    .report-meta {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-
-    .meta-item {
-        width: 100%;
-        justify-content: center;
-        padding: 0.5rem;
-    }
-
-    .dashboard-actions {
-        flex-direction: column;
-        gap: 0.5rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .brand-logo {
-        font-size: 1.2rem;
-        padding: 0.5rem 1rem;
-    }
-
-    .report-info h1 {
-        font-size: 1.4rem;
-    }
-
-    .block h2 {
-        font-size: 1.4rem;
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 0.5rem;
-    }
-
-    .block h2 span.emoji {
-        font-size: 1.3rem;
-    }
-}
-
 
 /* КОНЕЦ ФАЙЛА DASHBOARD.CSS */

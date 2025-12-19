@@ -20,37 +20,36 @@
         </nav>
     </div>
 </header>
-
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const header = document.querySelector('.main-header');
-    const hamburger = document.querySelector('.hamburger');
-    const navMenu = document.querySelector('.nav-menu');
+    document.addEventListener('DOMContentLoaded', function() {
+        const header = document.querySelector('.main-header');
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
 
-    // Mobile menu toggle
-    hamburger?.addEventListener('click', function() {
-        hamburger.classList.toggle('active');
-        navMenu.classList.toggle('active');
+        // Mobile menu toggle
+        hamburger?.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Header scroll effect
+        let lastScrollY = window.scrollY;
+
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+
+            // Hide header on scroll down, show on scroll up
+            if (window.scrollY > lastScrollY && window.scrollY > 200) {
+                header.classList.add('hidden');
+            } else {
+                header.classList.remove('hidden');
+            }
+
+            lastScrollY = window.scrollY;
+        });
     });
-
-    // Header scroll effect
-    let lastScrollY = window.scrollY;
-
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 100) {
-            header.classList.add('scrolled');
-        } else {
-            header.classList.remove('scrolled');
-        }
-
-        // Hide header on scroll down, show on scroll up
-        if (window.scrollY > lastScrollY && window.scrollY > 200) {
-            header.classList.add('hidden');
-        } else {
-            header.classList.remove('hidden');
-        }
-
-        lastScrollY = window.scrollY;
-    });
-});
 </script>

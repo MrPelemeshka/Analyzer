@@ -84,6 +84,32 @@
     </script>
 
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script>
+        // Инициализация после загрузки DOM
+        document.addEventListener('DOMContentLoaded', function() {
+            // Инициализация меню
+            const hamburger = document.querySelector('.hamburger');
+            const navMenu = document.querySelector('.nav-menu');
+
+            if (hamburger && navMenu) {
+                hamburger.addEventListener('click', function() {
+                    hamburger.classList.toggle('active');
+                    navMenu.classList.toggle('active');
+                });
+
+                // Закрытие меню при клике на ссылку
+                navMenu.querySelectorAll('.nav-link').forEach(link => {
+                    link.addEventListener('click', () => {
+                        hamburger.classList.remove('active');
+                        navMenu.classList.remove('active');
+                    });
+                });
+            }
+
+            // Инициализация Telegram
+            initializeTelegramFeedback();
+        });
+    </script>
     {% block scripts %}{% endblock %}
 
 
