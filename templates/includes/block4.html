@@ -23,8 +23,38 @@
             <input type="date" id="detail-end-date" class="control-select" onchange="updateBlock4()">
         </div>
     </div>
+    
+    <!-- График распределения времени -->
     <div class="chart-container">
         <div id="block4-chart"></div>
     </div>
+    
+    <!-- Основная статистика -->
     <div class="stats-grid" id="block4-stats"></div>
+    
+    <!-- Раздел производительности -->
+    <div class="productivity-section" id="block4-productivity">
+        <div class="section-header">
+            <h3><i class="fas fa-chart-line"></i> Анализ коэффициента загрузки оборудования</h3>
+        </div>
+        
+        <!-- Карточки с общей производительностью -->
+        <div class="productivity-cards" id="block4-overall-prod">
+            <!-- Будет заполнено JavaScript -->
+        </div>
+        
+        <!-- График тренда производительности -->
+        <div class="trend-chart-container">
+            <h4>Тренд коэффициента загрузки</h4>
+            <div id="productivity-trend-chart"></div>
+        </div>
+        
+        <!-- Таблица производительности по периодам -->
+        <div class="productivity-table-container">
+            <h4>Коэффициента загрузки по периодам</h4>
+            <div id="block4-period-prod">
+                <!-- Будет заполнено JavaScript -->
+            </div>
+        </div>
+    </div>
 </div>
