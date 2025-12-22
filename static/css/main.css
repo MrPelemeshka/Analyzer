@@ -1741,3 +1741,231 @@ main {
 .mx-auto { margin-left: auto; margin-right: auto; }
 .mt-4 { margin-top: 1rem; }
 .mt-8 { margin-top: 2rem; }
+
+/* ==========================================================================
+   СТИЛИ ДЛЯ ПРИМЕРА ДАННЫХ - ДОБАВЬТЕ В КОНЕЦ ФАЙЛА
+   ========================================================================== */
+
+.example-data-section {
+    background: var(--neutrals1);
+    padding: 2.5rem 0 3rem;
+    border-bottom: 1px solid var(--neutrals2);
+}
+
+.example-container {
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.example-header {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+
+.example-header h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    font-size: 1.75rem;
+    margin-bottom: 0.75rem;
+    color: var(--primary2);
+}
+
+.example-header h2 i {
+    color: var(--secondary2);
+    font-size: 1.5rem;
+}
+
+.example-header p {
+    color: #64748B;
+    font-size: 1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.example-content {
+    background: var(--neutrals1);
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(152, 197, 255, 0.2);
+    overflow: hidden;
+}
+
+.example-table-wrapper {
+    overflow-x: auto;
+    padding: 1rem;
+}
+
+.example-table-wrapper table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.875rem;
+    min-width: 600px;
+}
+
+.example-table-wrapper thead {
+    background: linear-gradient(135deg, var(--primary2) 0%, var(--secondary3) 100%);
+}
+
+.example-table-wrapper th {
+    color: var(--neutrals1);
+    font-weight: 600;
+    padding: 1rem;
+    text-align: left;
+    border-right: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.example-table-wrapper th:last-child {
+    border-right: none;
+}
+
+.example-table-wrapper td {
+    padding: 0.875rem 1rem;
+    color: #475569;
+    border-bottom: 1px solid var(--neutrals2);
+    transition: all var(--transition);
+}
+
+.example-table-wrapper tr:hover td {
+    background: var(--neutrals2);
+    color: var(--primary2);
+}
+
+.example-table-wrapper tr:last-child td {
+    border-bottom: none;
+}
+
+/* Чередование строк для лучшей читаемости */
+.example-table-wrapper tbody tr:nth-child(odd) {
+    background: rgba(152, 197, 255, 0.03);
+}
+
+.example-table-wrapper tbody tr:nth-child(odd):hover td {
+    background: var(--neutrals2);
+}
+
+.example-footer {
+    padding: 1.5rem;
+    background: var(--neutrals2);
+    border-top: 1px solid rgba(152, 197, 255, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.example-info {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: #475569;
+    font-size: 0.875rem;
+}
+
+.example-info i {
+    color: var(--secondary2);
+}
+
+.example-actions {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+/* Кнопка шаблона */
+.btn-template {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--gradient-primary);
+    color: var(--neutrals1);
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+    box-shadow: var(--shadow);
+}
+
+.btn-template:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Кнопка скачивания */
+.btn-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.625rem 1.25rem;
+    background: var(--neutrals1);
+    color: var(--secondary2);
+    border: 2px solid var(--secondary2);
+    border-radius: var(--radius);
+    font-size: 0.875rem;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: all var(--transition);
+}
+
+.btn-download:hover {
+    background: var(--secondary2);
+    color: var(--neutrals1);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Адаптивность для примера данных */
+@media (max-width: 768px) {
+    .example-data-section {
+        padding: 2rem 0;
+    }
+    
+    .example-header h2 {
+        font-size: 1.5rem;
+    }
+    
+    .example-footer {
+        flex-direction: column;
+        text-align: center;
+        gap: 1rem;
+    }
+    
+    .example-actions {
+        width: 100%;
+        justify-content: center;
+    }
+    
+    .btn-template,
+    .btn-download {
+        flex: 1;
+        min-width: 200px;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .example-table-wrapper {
+        padding: 0.5rem;
+    }
+    
+    .example-table-wrapper th,
+    .example-table-wrapper td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.8125rem;
+    }
+    
+    .btn-template,
+    .btn-download {
+        width: 100%;
+        min-width: unset;
+    }
+}

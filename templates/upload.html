@@ -3,6 +3,85 @@
 {% block title %}Создание отчета - эффективность.рф{% endblock %}
 
 {% block content %}
+<!-- Секция с примером данных -->
+<section class="example-data-section">
+    <div class="container">
+        <div class="example-header">
+            <h2>
+                <i class="fas fa-table"></i>
+                Формат загружаемых данных
+            </h2>
+            <p>Для корректной обработки убедитесь, что ваш Excel файл соответствует следующему формату:</p>
+        </div>
+
+        <div class="example-content">
+            <div class="example-table-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Оборудование</th>
+                            <th>Дата/Время начала</th>
+                            <th>Дата/Время окончания</th>
+                            <th>Статус</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Станок №1</td>
+                            <td>2024-01-15 08:00</td>
+                            <td>2024-01-15 08:50</td>
+                            <td>Работа</td>
+                        </tr>
+                        <tr>
+                            <td>Станок №2</td>
+                            <td>2024-01-15 09:00</td>
+                            <td>2024-01-15 12:00</td>
+                            <td>Готов к работе</td>
+                        </tr>
+                        <tr>
+                            <td>Станок №3</td>
+                            <td>2024-01-15 10:00</td>
+                            <td>2024-01-15 15:00</td>
+                            <td>Ремонт</td>
+                        </tr>
+                        <tr>
+                            <td>Станок №4</td>
+                            <td>2024-01-15 13:00</td>
+                            <td>2024-01-15 17:30</td>
+                            <td>Простой</td>
+                        </tr>
+                        <tr>
+                            <td>Станок №5</td>
+                            <td>2024-01-15 08:30</td>
+                            <td>2024-01-15 16:00</td>
+                            <td>Работа</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="example-footer">
+                <div class="example-info">
+                    <i class="fas fa-info-circle"></i>
+                    <span>Пример данных для загрузки. Поддерживаются форматы .xlsx и .xls</span>
+                </div>
+                <div class="example-actions">
+                    <a href="{{ url_for('static', filename='templates/example.xlsx') }}" 
+                       class="btn-template">
+                        <i class="fas fa-download"></i>
+                        Скачать шаблон
+                    </a>
+                    <button type="button" class="btn-download" onclick="copyExampleData()">
+                        <i class="fas fa-copy"></i>
+                        Скопировать пример
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Основная секция загрузки -->
 <section class="upload-section">
     <div class="container">
         <div class="upload-header">
@@ -51,6 +130,8 @@
                             <li><i class="fas fa-check-circle"></i> Колонки: Оборудование, Дата/Время начала, Дата/Время окончания, Статус</li>
                             <li><i class="fas fa-check-circle"></i> Дата в корректном формате</li>
                             <li><i class="fas fa-check-circle"></i> Максимальный размер: 10MB</li>
+                            <li><i class="fas fa-check-circle"></i> UTF-8 кодировка</li>
+                            <li><i class="fas fa-check-circle"></i> Одна вкладка с данными</li>
                         </ul>
                     </div>
 
@@ -74,48 +155,30 @@
                         <li><i class="fas fa-table"></i> Итоговые таблицы по периодам</li>
                         <li><i class="fas fa-chart-line"></i> Детальный анализ оборудования</li>
                         <li><i class="fas fa-download"></i> Готовый HTML для скачивания</li>
+                        <li><i class="fas fa-filter"></i> Фильтрация по датам и статусам</li>
+                        <li><i class="fas fa-calculator"></i> Расчет эффективности</li>
                     </ul>
                 </div>
 
                 <div class="sidebar-card">
-                    <h3><i class="fas fa-file-excel"></i> Пример данных</h3>
-                    <div class="data-preview">
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Оборудование</th>
-                                    <th>Дата начала</th>
-                                    <th>Дата окончания</th>
-                                    <th>Статус</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>Станок №1</td>
-                                    <td>2024-01-15 08:00</td>
-                                    <td>2024-01-15 08:50</td>
-                                    <td>Работа</td>
-                                </tr>
-                                <tr>
-                                    <td>Станок №2</td>
-                                    <td>2024-01-15 09:00</td>
-                                    <td>2024-01-15 12:00</td>
-                                    <td>Готов к работе</td>
-                                </tr>
-                                <tr>
-                                    <td>Станок №3</td>
-                                    <td>2024-01-15 10:00</td>
-                                    <td>2024-01-15 15:00</td>
-                                    <td>Ремонт</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="mt-4">
-                        <a href="{{ url_for('static', filename='templates/example.xlsx') }}" class="btn btn-outline w-full" style="font-size: 0.875rem; padding: 0.5rem;">
-                            <i class="fas fa-download"></i>
-                            Скачать шаблон
-                        </a>
+                    <h3><i class="fas fa-lightbulb"></i> Советы по подготовке данных</h3>
+                    <div class="features-list">
+                        <div class="tip-item">
+                            <i class="fas fa-check"></i>
+                            <span>Убедитесь, что даты в правильном формате</span>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-check"></i>
+                            <span>Проверьте отсутствие пустых строк</span>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-check"></i>
+                            <span>Используйте единообразные названия статусов</span>
+                        </div>
+                        <div class="tip-item">
+                            <i class="fas fa-check"></i>
+                            <span>Сохраните файл в формате .xlsx</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -203,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         // Показать информацию о файле
-        fileName.textContent = file.name;
+        fileName.textContent = truncateFileName(file.name, 30);
         fileSize.textContent = formatFileSize(file.size);
         fileInfo.style.display = 'flex';
         uploadPlaceholder.style.display = 'none';
@@ -218,12 +281,20 @@ document.addEventListener('DOMContentLoaded', function() {
         return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     }
 
+    function truncateFileName(name, maxLength) {
+        if (name.length <= maxLength) return name;
+        const extension = name.split('.').pop();
+        const nameWithoutExt = name.substring(0, name.lastIndexOf('.'));
+        const truncated = nameWithoutExt.substring(0, maxLength - extension.length - 3);
+        return truncated + '...' + extension;
+    }
+
     function showError(message) {
         const existingAlert = document.querySelector('.alert-error');
         if (existingAlert) existingAlert.remove();
 
         const alert = document.createElement('div');
-        alert.className = 'alert alert-error';
+        alert.className = 'alert alert-error animate-in';
         alert.innerHTML = `<i class="fas fa-exclamation-triangle"></i><span>${message}</span>`;
         
         const uploadIcon = document.querySelector('.upload-icon');
@@ -248,11 +319,76 @@ document.addEventListener('DOMContentLoaded', function() {
         const btnText = submitBtn.querySelector('.btn-text');
         const btnSpinner = submitBtn.querySelector('.btn-spinner');
         
-        btnText.style.display = 'none';
-        btnSpinner.style.display = 'inline';
+        if (btnText) btnText.style.display = 'none';
+        if (btnSpinner) btnSpinner.style.display = 'inline';
+        
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обработка...';
     });
 });
+
+// Функция копирования примера данных
+function copyExampleData() {
+    const exampleData = `Оборудование,Дата/Время начала,Дата/Время окончания,Статус
+Станок №1,2024-01-15 08:00,2024-01-15 08:50,Работа
+Станок №2,2024-01-15 09:00,2024-01-15 12:00,Готов к работе
+Станок №3,2024-01-15 10:00,2024-01-15 15:00,Ремонт
+Станок №4,2024-01-15 13:00,2024-01-15 17:30,Простой`;
+    
+    navigator.clipboard.writeText(exampleData).then(() => {
+        // Показать уведомление об успешном копировании
+        const btn = document.querySelector('.btn-download');
+        const originalHTML = btn.innerHTML;
+        btn.innerHTML = '<i class="fas fa-check"></i> Скопировано!';
+        btn.style.background = 'var(--gradient-primary)';
+        btn.style.color = 'var(--neutrals1)';
+        btn.style.borderColor = 'transparent';
+        
+        setTimeout(() => {
+            btn.innerHTML = originalHTML;
+            btn.style.background = 'var(--neutrals1)';
+            btn.style.color = 'var(--secondary2)';
+            btn.style.borderColor = 'var(--secondary2)';
+        }, 2000);
+    }).catch(err => {
+        console.error('Ошибка копирования: ', err);
+        alert('Не удалось скопировать данные. Пожалуйста, скопируйте вручную из таблицы выше.');
+    });
+}
 </script>
+
+<style>
+/* Добавим анимацию для кнопки копирования */
+.btn-download i.fa-check {
+    animation: checkmark 0.5s ease;
+}
+
+@keyframes checkmark {
+    0% { transform: scale(0); opacity: 0; }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* Стили для элементов советов */
+.tip-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.75rem;
+    font-size: 0.8125rem;
+    color: #475569;
+    padding: 0.5rem;
+    background: rgba(152, 197, 255, 0.1);
+    border-radius: var(--radius-sm);
+}
+
+.tip-item i {
+    color: var(--secondary2);
+    font-size: 0.75rem;
+}
+
+.tip-item:last-child {
+    margin-bottom: 0;
+}
+</style>
 {% endblock %}
