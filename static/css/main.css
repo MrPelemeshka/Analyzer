@@ -1969,3 +1969,373 @@ main {
         min-width: unset;
     }
 }
+
+/* ==========================================================================
+   СТИЛИ ДЛЯ ВЕРТИКАЛЬНЫХ КАРТОЧЕК С КАРТИНКАМИ
+   ========================================================================== */
+
+.features-section {
+    background: var(--neutrals2);
+    position: relative;
+    padding: 4rem 0;
+}
+
+/* Основные стили карточек */
+.feature-card {
+    background: var(--neutrals1);
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+    border: 1px solid rgba(152, 197, 255, 0.2);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    margin-bottom: 3rem;
+}
+
+.feature-card:last-child {
+    margin-bottom: 0;
+}
+
+.feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--primary1);
+}
+
+.feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: var(--gradient-primary);
+    z-index: 2;
+}
+
+.feature-card-reverse::before {
+    background: var(--gradient-secondary);
+}
+
+/* Стили для секции с картинками */
+.feature-preview {
+    position: relative;
+    height: 320px;
+    background: linear-gradient(135deg, rgba(152, 197, 255, 0.1) 0%, rgba(11, 77, 162, 0.05) 100%);
+    overflow: hidden;
+}
+
+.feature-card-reverse .feature-preview {
+    background: linear-gradient(135deg, rgba(88, 160, 252, 0.1) 0%, rgba(11, 77, 162, 0.05) 100%);
+}
+
+.preview-container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
+.preview-image-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.feature-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .feature-image {
+    transform: scale(1.05);
+}
+
+.image-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, 
+        rgba(1, 26, 56, 0.9) 0%, 
+        rgba(1, 26, 56, 0.7) 50%, 
+        rgba(1, 26, 56, 0) 100%);
+    padding: 2rem;
+    transform: translateY(100%);
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.feature-card:hover .image-overlay {
+    transform: translateY(0);
+}
+
+.overlay-text {
+    color: var(--neutrals1);
+    font-size: 1.125rem;
+    font-weight: 600;
+    text-align: center;
+    display: block;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.1s;
+}
+
+.feature-card:hover .overlay-text {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Стили для контента */
+.feature-card-content {
+    padding: 2.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.feature-icon {
+    width: 64px;
+    height: 64px;
+    margin-bottom: 1.5rem;
+    background: var(--gradient-primary);
+    border-radius: var(--radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--neutrals1);
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-md);
+}
+
+.feature-card-reverse .feature-icon {
+    background: var(--gradient-secondary);
+}
+
+.feature-card-content h3 {
+    font-size: 1.75rem;
+    margin-bottom: 1rem;
+    color: var(--primary2);
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.feature-card-content h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background: var(--gradient-primary);
+    border-radius: 3px;
+}
+
+.feature-card-reverse .feature-card-content h3::after {
+    background: var(--gradient-secondary);
+}
+
+.feature-card-content p {
+    font-size: 1.125rem;
+    color: #64748B;
+    margin-bottom: 1.5rem;
+    line-height: 1.6;
+}
+
+.feature-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.feature-list li {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.9375rem;
+    color: #475569;
+    padding: 0.5rem;
+    background: rgba(152, 197, 255, 0.05);
+    border-radius: var(--radius-sm);
+    transition: all 0.3s ease;
+}
+
+.feature-list li:hover {
+    background: rgba(152, 197, 255, 0.1);
+    transform: translateX(4px);
+}
+
+.feature-list i {
+    color: var(--secondary2);
+    font-size: 0.875rem;
+    min-width: 16px;
+}
+
+.feature-card-reverse .feature-list i {
+    color: var(--secondary3);
+}
+
+/* Стили для иконок статусов (опционально, если нужно) */
+.status-icon {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: var(--shadow-md);
+    z-index: 3;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1) 0.2s;
+}
+
+.feature-card:hover .status-icon {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.status-icon i {
+    color: var(--secondary2);
+    font-size: 1.125rem;
+}
+
+.feature-card-reverse .status-icon i {
+    color: var(--secondary3);
+}
+
+/* Декоративные элементы для карточек */
+.feature-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, 
+        rgba(152, 197, 255, 0.05) 0%, 
+        rgba(255, 255, 255, 0) 50%, 
+        rgba(152, 197, 255, 0.05) 100%);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.feature-card:hover::after {
+    opacity: 1;
+}
+
+/* Адаптивность */
+@media (max-width: 1024px) {
+    .feature-preview {
+        height: 280px;
+    }
+    
+    .feature-card-content {
+        padding: 2rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .features-section {
+        padding: 3rem 0;
+    }
+    
+    .feature-card {
+        margin-bottom: 2rem;
+    }
+    
+    .feature-preview {
+        height: 240px;
+    }
+    
+    .feature-card-content {
+        padding: 1.75rem;
+    }
+    
+    .feature-icon {
+        width: 56px;
+        height: 56px;
+        font-size: 1.25rem;
+    }
+    
+    .feature-card-content h3 {
+        font-size: 1.5rem;
+    }
+    
+    .feature-card-content p {
+        font-size: 1rem;
+    }
+    
+    .feature-list {
+        grid-template-columns: 1fr;
+        gap: 0.625rem;
+    }
+    
+    .image-overlay {
+        padding: 1.5rem;
+    }
+    
+    .overlay-text {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .feature-preview {
+        height: 200px;
+    }
+    
+    .feature-card-content {
+        padding: 1.5rem;
+    }
+    
+    .feature-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.125rem;
+    }
+    
+    .feature-card-content h3 {
+        font-size: 1.25rem;
+    }
+    
+    .feature-card-content p {
+        font-size: 0.9375rem;
+    }
+    
+    .image-overlay {
+        padding: 1rem;
+        transform: translateY(0);
+        background: linear-gradient(to top, 
+            rgba(1, 26, 56, 0.8) 0%, 
+            rgba(1, 26, 56, 0.6) 100%);
+    }
+    
+    .overlay-text {
+        opacity: 1;
+        transform: translateY(0);
+        font-size: 0.875rem;
+    }
+}
+
+/* Опционально: стили для альтернативного варианта с тенью */
+.feature-image-shadow {
+    filter: drop-shadow(0 4px 12px rgba(1, 26, 56, 0.15));
+}
+
+/* Опционально: стили для черно-белого эффекта */
+.feature-image-bw {
+    filter: grayscale(20%);
+    transition: filter 0.3s ease;
+}
+
+.feature-card:hover .feature-image-bw {
+    filter: grayscale(0%);
+}

@@ -7,62 +7,127 @@
             <p>Комплексный анализ работы оборудования в одном отчете</p>
         </div>
         
-        <!-- Сетка карточек с возможностями -->
-        <div class="features-grid">
-            <!-- Карточка 1: Временная шкала -->
-            <div class="feature-card">
+        <!-- Карточка 1: Временная шкала (Картинка сверху) -->
+        <div class="feature-card feature-card-reverse">
+            <!-- Демонстрация сверху -->
+            <div class="feature-preview">
+                <div class="preview-container">
+                    <div class="preview-image-wrapper">
+                        <!-- ВСТАВЬТЕ ВАШУ КАРТИНКУ 1 -->
+                        <img src="/static/images/timediagram.png" alt="Временная шкала - демонстрация" class="feature-image">
+                        <div class="image-overlay">
+                            <span class="overlay-text">Интерактивная временная шкала</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Контент снизу -->
+            <div class="feature-card-content">
                 <div class="feature-icon">
                     <i class="fas fa-clock"></i>
                 </div>
                 <h3>Временная шкала</h3>
-                <p>Визуализация всех статусов оборудования на единой временной шкале с возможностью фильтрации</p>
+                <p>Визуализация всех статусов оборудования на единой временной шкале с возможностью фильтрации. Отслеживайте изменения в режиме реального времени.</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Полная история состояний</li>
-                    <li><i class="fas fa-check"></i> Фильтрация по оборудованию</li>
-                    <li><i class="fas fa-check"></i> Интерактивное масштабирование</li>
+                    <li><i class="fas fa-check"></i> Полная история состояний оборудования</li>
+                    <li><i class="fas fa-check"></i> Фильтрация по оборудованию и периодам</li>
+                    <li><i class="fas fa-check"></i> Интерактивное масштабирование временной шкалы</li>
+                    <li><i class="fas fa-check"></i> Экспорт данных в различных форматах</li>
                 </ul>
             </div>
-            
-            <!-- Карточка 2: Распределение времени -->
-            <div class="feature-card">
+        </div>
+        
+        <!-- Карточка 2: Распределение времени (Контент сверху) -->
+        <div class="feature-card">
+            <!-- Контент сверху -->
+            <div class="feature-card-content">
                 <div class="feature-icon">
                     <i class="fas fa-chart-pie"></i>
                 </div>
                 <h3>Распределение времени</h3>
-                <p>Круговые диаграммы показывают соотношение времени в разных статусах для каждого оборудования</p>
+                <p>Круговые диаграммы показывают соотношение времени в разных статусах для каждого оборудования. Анализируйте эффективность использования ресурсов.</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Процентное соотношение</li>
-                    <li><i class="fas fa-check"></i> Абсолютные значения в часах</li>
-                    <li><i class="fas fa-check"></i> Сравнение по периодам</li>
+                    <li><i class="fas fa-check"></i> Процентное соотношение времени по статусам</li>
+                    <li><i class="fas fa-check"></i> Абсолютные значения в часах и минутах</li>
+                    <li><i class="fas fa-check"></i> Сравнение показателей по периодам</li>
+                    <li><i class="fas fa-check"></i> Детализация по каждому оборудованию</li>
                 </ul>
             </div>
             
-            <!-- Карточка 3: Итоговые таблицы -->
-            <div class="feature-card">
+            <!-- Демонстрация снизу -->
+            <div class="feature-preview">
+                <div class="preview-container">
+                    <div class="preview-image-wrapper">
+                        <!-- ВСТАВЬТЕ ВАШУ КАРТИНКУ 2 -->
+                        <img src="/static/images/raspredelenie.png" alt="Круговая диаграмма - демонстрация" class="feature-image">
+                        <div class="image-overlay">
+                            <span class="overlay-text">Визуализация распределения</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Карточка 3: Итоговые таблицы (Картинка сверху) -->
+        <div class="feature-card feature-card-reverse">
+            <!-- Демонстрация сверху -->
+            <div class="feature-preview">
+                <div class="preview-container">
+                    <div class="preview-image-wrapper">
+                        <!-- ВСТАВЬТЕ ВАШУ КАРТИНКУ 3 -->
+                        <img src="/static/images/itog.png" alt="Сводная таблица - демонстрация" class="feature-image">
+                        <div class="image-overlay">
+                            <span class="overlay-text">Детализированные отчеты</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Контент снизу -->
+            <div class="feature-card-content">
                 <div class="feature-icon">
                     <i class="fas fa-table"></i>
                 </div>
                 <h3>Итоговые таблицы</h3>
-                <p>Детальные таблицы с суммарными показателями по каждому оборудованию и статусу</p>
+                <p>Детальные таблицы с суммарными показателями по каждому оборудованию и статусу. Получайте полную картину производительности.</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Сводные данные</li>
-                    <li><i class="fas fa-check"></i> Группировка по периодам</li>
-                    <li><i class="fas fa-check"></i> Экспорт в HTML</li>
+                    <li><i class="fas fa-check"></i> Сводные данные по всем единицам оборудования</li>
+                    <li><i class="fas fa-check"></i> Группировка данных по периодам (день, неделя, месяц)</li>
+                    <li><i class="fas fa-check"></i> Автоматический расчет ключевых показателей</li>
+                    <li><i class="fas fa-check"></i> Экспорт в HTML, CSV и PDF форматах</li>
                 </ul>
             </div>
-            
-            <!-- Карточка 4: Детальный анализ -->
-            <div class="feature-card">
+        </div>
+        
+        <!-- Карточка 4: Детальный анализ (Контент сверху) -->
+        <div class="feature-card">
+            <!-- Контент сверху -->
+            <div class="feature-card-content">
                 <div class="feature-icon">
                     <i class="fas fa-chart-line"></i>
                 </div>
                 <h3>Детальный анализ</h3>
-                <p>Глубокий анализ конкретного оборудования с разбивкой по дням, неделям или месяцам</p>
+                <p>Глубокий анализ конкретного оборудования с разбивкой по дням, неделям или месяцам. Выявляйте тенденции и оптимизируйте процессы.</p>
                 <ul class="feature-list">
-                    <li><i class="fas fa-check"></i> Настраиваемые периоды</li>
-                    <li><i class="fas fa-check"></i> Stacked bar charts</li>
-                    <li><i class="fas fa-check"></i> Ключевые метрики</li>
+                    <li><i class="fas fa-check"></i> Настраиваемые периоды анализа</li>
+                    <li><i class="fas fa-check"></i> Stacked bar charts для визуализации</li>
+                    <li><i class="fas fa-check"></i> Ключевые метрики производительности</li>
+                    <li><i class="fas fa-check"></i> Сравнительный анализ с предыдущими периодами</li>
                 </ul>
+            </div>
+            
+            <!-- Демонстрация снизу -->
+            <div class="feature-preview">
+                <div class="preview-container">
+                    <div class="preview-image-wrapper">
+                        <!-- ВСТАВЬТЕ ВАШУ КАРТИНКУ 4 -->
+                        <img src="/static/images/detailed.png" alt="Детальный анализ - демонстрация" class="feature-image">
+                        <div class="image-overlay">
+                            <span class="overlay-text">Углубленная аналитика</span>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
