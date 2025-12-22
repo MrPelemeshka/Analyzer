@@ -407,6 +407,15 @@ html, body {
     transition: all var(--transition-normal);
 }
 
+.control-select {
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23217FF9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 1em;
+    cursor: pointer;
+}
+
 .control-group label:hover {
     background: var(--neutrals1);
     border-color: var(--secondary2);
@@ -421,6 +430,23 @@ html, body {
 }
 
 .control-select, .control-group input {
+    padding: 0.875rem 1.25rem;
+    border: 2px solid rgba(88, 160, 252, 0.3);
+    border-radius: var(--radius-sm);
+    font-size: var(--font-base);
+    background: linear-gradient(135deg, var(--neutrals1), var(--neutrals2));
+    transition: all var(--transition-slow);
+    font-family: inherit;
+    width: 100%;
+    box-sizing: border-box;
+    color: var(--secondary3);
+    font-weight: 500;
+    box-shadow: var(--shadow-light);
+    position: relative;
+}
+
+.control-select,
+.control-group input:not([type="date"]) {
     padding: 0.875rem 1.25rem;
     border: 2px solid rgba(88, 160, 252, 0.3);
     border-radius: var(--radius-sm);
@@ -451,13 +477,54 @@ html, body {
     transform: translateY(-2px);
 }
 
-.control-select {
-    appearance: none;
-    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23217FF9' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
-    background-repeat: no-repeat;
-    background-position: right 1rem center;
-    background-size: 1em;
+/* Стили для календаря в современных браузерах */
+.control-group input[type="date"]::-webkit-calendar-picker-indicator {
     cursor: pointer;
+    opacity: 0.7;
+    transition: opacity var(--transition-normal);
+    padding: 0.25rem;
+    border-radius: var(--radius-sm);
+    background-color: rgba(88, 160, 252, 0.1);
+}
+
+.control-group input[type="date"]::-webkit-calendar-picker-indicator:hover {
+    opacity: 1;
+    background-color: rgba(88, 160, 252, 0.2);
+}
+
+/* Состояния фокуса и ховера для date input */
+.control-group input[type="date"]:focus {
+    outline: none;
+    border-color: var(--secondary2);
+    box-shadow: 0 0 0 3px rgba(88, 160, 252, 0.2),
+                var(--shadow-medium);
+    background: var(--neutrals1);
+    transform: translateY(-2px);
+}
+
+.control-group input[type="date"]:hover {
+    border-color: var(--secondary2);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.control-select:focus,
+.control-group input:not([type="date"]):focus,
+.control-group input[type="date"]:focus {
+    outline: none;
+    border-color: var(--secondary2);
+    box-shadow: 0 0 0 3px rgba(88, 160, 252, 0.2),
+                var(--shadow-medium);
+    background: var(--neutrals1);
+    transform: translateY(-2px);
+}
+
+.control-select:hover,
+.control-group input:not([type="date"]):hover,
+.control-group input[type="date"]:hover {
+    border-color: var(--secondary2);
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
 }
 
 /* КОНТЕЙНЕРЫ ГРАФИКОВ */
@@ -600,7 +667,7 @@ html, body {
 }
 
 .compact-table th {
-    color: var(--neutrals1);
+    color: var(--neutrals3);
     padding: 1rem 1.5rem;
     text-align: left;
     font-weight: 700;
