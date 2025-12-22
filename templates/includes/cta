@@ -1,0 +1,18 @@
+<!-- Секция призыва к действию -->
+<section id="cta" class="cta-section">
+    <div class="container">
+        <div class="cta-content">
+            <!-- Заголовок призыва -->
+            <h2>Готовы оптимизировать ваше оборудование?</h2>
+            
+            <!-- Описание призыва -->
+            <p>Начните анализ прямо сейчас и получите детальную статистику</p>
+            
+            <!-- Основная кнопка действия -->
+            <a href="{{ url_for('upload_page') }}" class="btn btn-secondary btn-large">
+                <i class="fas fa-chart-bar"></i>
+                Начать анализ
+            </a>
+        </div>
+    </div>
+</section>

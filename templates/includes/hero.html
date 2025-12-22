@@ -1,64 +1,45 @@
-<!-- includes/hero.html -->
+<!-- Главный баннер с описанием сервиса -->
 <section class="hero-section">
     <div class="hero-background"></div>
     <div class="container">
-        <div class="hero-content-wrapper">
-            <div class="hero-content">
-                <div class="hero-text">
-                    <h1 class="hero-title">
-                        <span class="gradient-text">Умный анализ</span>
-                        эффективности оборудования
-                    </h1>
-                    <p class="hero-description">
-                        Превратите данные о работе оборудования в понятные отчеты и визуализации.
-                        Оптимизируйте производственные процессы с помощью детальной аналитики.
-                    </p>
-                    <div class="hero-actions">
-                        <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-large">
-                            <i class="fas fa-rocket"></i>
-                            Создать отчет
-                        </a>
-                        <a href="#instructions" class="btn btn-secondary btn-large">
-                            <i class="fas fa-book-open"></i>
-                            Смотреть инструкцию
-                        </a>
-                    </div>
-                    <div class="hero-stats">
-                        <div class="stat-item">
-                            <div class="stat-number">4</div>
-                            <div class="stat-label">вида анализа</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">100%</div>
-                            <div class="stat-label">автоматизация</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-number">5 мин</div>
-                            <div class="stat-label">на отчет</div>
-                        </div>
-                    </div>
+        <div class="hero-content">
+            <div class="hero-text">
+                <!-- Заголовок с градиентным текстом -->
+                <h1 class="hero-title">
+                    <span class="gradient-text">Умный анализ эффективности оборудования</span>
+                </h1>
+                
+                <!-- Описание сервиса -->
+                <p class="hero-description">
+                    Превратите данные о работе оборудования в понятные отчеты и визуализации.
+                    Оптимизируйте производственные процессы с помощью детальной аналитики.
+                </p>
+                
+                <!-- Кнопки действий -->
+                <div class="hero-actions">
+                    <a href="{{ url_for('upload_page') }}" class="btn btn-primary btn-large">
+                        <i class="fas fa-rocket"></i>
+                        Создать отчет
+                    </a>
+                    <a href="#instructions" class="btn btn-secondary btn-large">
+                        <i class="fas fa-book-open"></i>
+                        Смотреть инструкцию
+                    </a>
                 </div>
-                <div class="hero-visual">
-                    <div class="visual-container">
-                        <div class="dashboard-preview">
-                            <div class="preview-header"></div>
-                            <div class="preview-charts">
-                                <div class="preview-chart"></div>
-                                <div class="preview-chart"></div>
-                            </div>
-                        </div>
-                        <div class="floating-card card-1">
-                            <i class="fas fa-chart-pie"></i>
-                            <span>Круговые диаграммы</span>
-                        </div>
-                        <div class="floating-card card-2">
-                            <i class="fas fa-chart-bar"></i>
-                            <span>Временные шкалы</span>
-                        </div>
-                        <div class="floating-card card-3">
-                            <i class="fas fa-table"></i>
-                            <span>Детальные таблицы</span>
-                        </div>
+                
+                <!-- Блок статистики -->
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-number">4</div>
+                        <div class="stat-label">вида анализа</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">100%</div>
+                        <div class="stat-label">автоматизация</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">5 мин</div>
+                        <div class="stat-label">на отчет</div>
                     </div>
                 </div>
             </div>

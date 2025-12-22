@@ -5,42 +5,26 @@
 {% block content %}
 <div class="page-wrapper">
     <!-- Hero Section -->
-    <section id="hero">
-        {% include 'includes/hero.html' %}
-    </section>
+    {% include 'includes/hero.html' %}
 
     <!-- Features Section -->
-    <section id="features">
-        {% include 'includes/features.html' %}
-    </section>
+    {% include 'includes/features.html' %}
 
     <!-- Instructions Section -->
-    <section id="instructions">
-        {% include 'includes/instructions.html' %}
-    </section>
+    {% include 'includes/instructions.html' %}
 
     <!-- CTA Section -->
-    <section id="cta">
-        <div class="cta-section">
-            <div class="container">
-                <div class="cta-content">
-                    <h2>Готовы оптимизировать ваше оборудование?</h2>
-                    <p>Начните анализ прямо сейчас и получите детальную статистику</p>
-                    <a href="{{ url_for('upload_page') }}" class="btn btn-secondary btn-large">
-                        <i class="fas fa-chart-bar"></i>
-                        Начать анализ
-                    </a>
-                </div>
-            </div>
-        </div>
-    </section>
+    {% include 'includes/cta.html' %}
 </div>
 {% endblock %}
 
 {% block scripts %}
 <style>
     /* Убедимся, что секции идут последовательно */
-    #hero, #features, #instructions, #cta {
+    .hero-section, 
+    .features-section, 
+    .instructions-section, 
+    .cta-section {
         position: relative;
         display: block;
         width: 100%;

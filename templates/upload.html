@@ -19,18 +19,18 @@
                 {% if error %}
                 <div class="alert alert-error">
                     <i class="fas fa-exclamation-triangle"></i>
-                    {{ error }}
+                    <span>{{ error }}</span>
                 </div>
                 {% endif %}
 
                 <form method="POST" action="{{ url_for('generate_report') }}" enctype="multipart/form-data" class="upload-form" id="uploadForm">
                     <div class="file-upload-area" id="fileUploadArea">
-                        <input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required>
-                        <div class="upload-placeholder">
+                        <input type="file" name="file" id="fileInput" accept=".xlsx,.xls" required hidden>
+                        <div class="upload-placeholder" id="uploadPlaceholder">
                             <i class="fas fa-cloud-upload-alt"></i>
                             <h3>Перетащите Excel файл сюда</h3>
                             <p>или нажмите для выбора файла</p>
-                            <span>Поддерживаются форматы .xlsx и .xls</span>
+                            <span>Форматы .xlsx и .xls, до 10MB</span>
                         </div>
                         <div class="file-info" id="fileInfo" style="display: none;">
                             <i class="fas fa-file-excel"></i>
@@ -38,31 +38,29 @@
                                 <span class="file-name" id="fileName"></span>
                                 <span class="file-size" id="fileSize"></span>
                             </div>
-                            <button type="button" class="btn-remove" id="btnRemove">
+                            <button type="button" class="btn-remove" id="btnRemove" title="Удалить файл">
                                 <i class="fas fa-times"></i>
                             </button>
                         </div>
                     </div>
 
                     <div class="upload-requirements">
-                        <h4>Требования к файлу:</h4>
+                        <h4><i class="fas fa-list-check"></i> Требования к файлу:</h4>
                         <ul>
-                            <li><i class="fas fa-check"></i> Формат Excel (.xlsx или .xls)</li>
-                            <li><i class="fas fa-check"></i> Колонки: Оборудование, Дата/Время начала, Дата/Время окончания, Статус</li>
-                            <li><i class="fas fa-check"></i> Дата в корректном формате</li>
-                            <li><i class="fas fa-check"></i> Максимальный размер: 10MB</li>
+                            <li><i class="fas fa-check-circle"></i> Формат Excel (.xlsx или .xls)</li>
+                            <li><i class="fas fa-check-circle"></i> Колонки: Оборудование, Дата/Время начала, Дата/Время окончания, Статус</li>
+                            <li><i class="fas fa-check-circle"></i> Дата в корректном формате</li>
+                            <li><i class="fas fa-check-circle"></i> Максимальный размер: 10MB</li>
                         </ul>
                     </div>
 
-                    <button type="submit" class="btn btn-secondary btn-large btn-loading" id="submitBtn" disabled>
-                        <span class="btn-text">
-                            <i class="fas fa-chart-bar"></i>
-                            Создать отчет
-                        </span>
-                        <div class="btn-spinner" style="display: none;">
+                    <button type="submit" class="btn btn-primary btn-large w-full" id="submitBtn" disabled>
+                        <i class="fas fa-chart-bar"></i>
+                        <span class="btn-text">Создать отчет</span>
+                        <span class="btn-spinner" style="display: none;">
                             <i class="fas fa-spinner fa-spin"></i>
                             Обработка...
-                        </div>
+                        </span>
                     </button>
                 </form>
             </div>
@@ -75,18 +73,19 @@
                         <li><i class="fas fa-chart-pie"></i> Круговые диаграммы распределения</li>
                         <li><i class="fas fa-table"></i> Итоговые таблицы по периодам</li>
                         <li><i class="fas fa-chart-line"></i> Детальный анализ оборудования</li>
+                        <li><i class="fas fa-download"></i> Готовый HTML для скачивания</li>
                     </ul>
                 </div>
 
                 <div class="sidebar-card">
-                    <h3><i class="fas fa-clock"></i> Пример данных</h3>
+                    <h3><i class="fas fa-file-excel"></i> Пример данных</h3>
                     <div class="data-preview">
                         <table>
                             <thead>
                                 <tr>
                                     <th>Оборудование</th>
-                                    <th>Дата/Время начала</th>
-                                    <th>Дата/Время окончания</th>
+                                    <th>Дата начала</th>
+                                    <th>Дата окончания</th>
                                     <th>Статус</th>
                                 </tr>
                             </thead>
@@ -103,8 +102,20 @@
                                     <td>2024-01-15 12:00</td>
                                     <td>Готов к работе</td>
                                 </tr>
+                                <tr>
+                                    <td>Станок №3</td>
+                                    <td>2024-01-15 10:00</td>
+                                    <td>2024-01-15 15:00</td>
+                                    <td>Ремонт</td>
+                                </tr>
                             </tbody>
                         </table>
+                    </div>
+                    <div class="mt-4">
+                        <a href="{{ url_for('static', filename='templates/example.xlsx') }}" class="btn btn-outline w-full" style="font-size: 0.875rem; padding: 0.5rem;">
+                            <i class="fas fa-download"></i>
+                            Скачать шаблон
+                        </a>
                     </div>
                 </div>
             </div>
@@ -118,6 +129,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     const fileInput = document.getElementById('fileInput');
     const fileUploadArea = document.getElementById('fileUploadArea');
+    const uploadPlaceholder = document.getElementById('uploadPlaceholder');
     const fileInfo = document.getElementById('fileInfo');
     const fileName = document.getElementById('fileName');
     const fileSize = document.getElementById('fileSize');
@@ -125,7 +137,14 @@ document.addEventListener('DOMContentLoaded', function() {
     const submitBtn = document.getElementById('submitBtn');
     const uploadForm = document.getElementById('uploadForm');
 
-    // Drag and drop functionality
+    // Клик по области загрузки
+    fileUploadArea.addEventListener('click', function(e) {
+        if (e.target !== btnRemove && !btnRemove.contains(e.target)) {
+            fileInput.click();
+        }
+    });
+
+    // Drag and drop
     fileUploadArea.addEventListener('dragover', function(e) {
         e.preventDefault();
         fileUploadArea.classList.add('dragover');
@@ -138,47 +157,57 @@ document.addEventListener('DOMContentLoaded', function() {
     fileUploadArea.addEventListener('drop', function(e) {
         e.preventDefault();
         fileUploadArea.classList.remove('dragover');
-        const files = e.dataTransfer.files;
-        if (files.length > 0) {
-            fileInput.files = files;
-            handleFileSelect(files[0]);
+        if (e.dataTransfer.files.length > 0) {
+            fileInput.files = e.dataTransfer.files;
+            handleFileSelect(e.dataTransfer.files[0]);
         }
     });
 
+    // Изменение файла
     fileInput.addEventListener('change', function(e) {
         if (e.target.files.length > 0) {
             handleFileSelect(e.target.files[0]);
         }
     });
 
-    btnRemove.addEventListener('click', function() {
+    // Удаление файла
+    btnRemove.addEventListener('click', function(e) {
+        e.stopPropagation();
         fileInput.value = '';
         fileInfo.style.display = 'none';
+        uploadPlaceholder.style.display = 'block';
         submitBtn.disabled = true;
-        fileUploadArea.querySelector('.upload-placeholder').style.display = 'block';
+        submitBtn.innerHTML = '<i class="fas fa-chart-bar"></i><span class="btn-text">Создать отчет</span>';
     });
 
     function handleFileSelect(file) {
-        if (file) {
-            const isValidType = file.name.endsWith('.xlsx') || file.name.endsWith('.xls');
-            const isValidSize = file.size <= 10 * 1024 * 1024; // 10MB
+        if (!file) return;
 
-            if (!isValidType) {
-                alert('Пожалуйста, выберите Excel файл (.xlsx или .xls)');
-                return;
-            }
+        // Проверка типа файла
+        const validTypes = ['.xlsx', '.xls'];
+        const isValidType = validTypes.some(type => 
+            file.name.toLowerCase().endsWith(type)
+        );
 
-            if (!isValidSize) {
-                alert('Файл слишком большой. Максимальный размер: 10MB');
-                return;
-            }
+        // Проверка размера (10MB)
+        const isValidSize = file.size <= 10 * 1024 * 1024;
 
-            fileName.textContent = file.name;
-            fileSize.textContent = formatFileSize(file.size);
-            fileInfo.style.display = 'flex';
-            fileUploadArea.querySelector('.upload-placeholder').style.display = 'none';
-            submitBtn.disabled = false;
+        if (!isValidType) {
+            showError('Пожалуйста, выберите Excel файл (.xlsx или .xls)');
+            return;
         }
+
+        if (!isValidSize) {
+            showError('Файл слишком большой. Максимальный размер: 10MB');
+            return;
+        }
+
+        // Показать информацию о файле
+        fileName.textContent = file.name;
+        fileSize.textContent = formatFileSize(file.size);
+        fileInfo.style.display = 'flex';
+        uploadPlaceholder.style.display = 'none';
+        submitBtn.disabled = false;
     }
 
     function formatFileSize(bytes) {
@@ -186,17 +215,43 @@ document.addEventListener('DOMContentLoaded', function() {
         const k = 1024;
         const sizes = ['Bytes', 'KB', 'MB', 'GB'];
         const i = Math.floor(Math.log(bytes) / Math.log(k));
-        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
     }
 
-    // Form submission
-    uploadForm.addEventListener('submit', function() {
+    function showError(message) {
+        const existingAlert = document.querySelector('.alert-error');
+        if (existingAlert) existingAlert.remove();
+
+        const alert = document.createElement('div');
+        alert.className = 'alert alert-error';
+        alert.innerHTML = `<i class="fas fa-exclamation-triangle"></i><span>${message}</span>`;
+        
+        const uploadIcon = document.querySelector('.upload-icon');
+        uploadIcon.parentNode.insertBefore(alert, uploadIcon.nextSibling);
+
+        setTimeout(() => {
+            if (alert.parentNode) {
+                alert.remove();
+            }
+        }, 5000);
+    }
+
+    // Обработка отправки формы
+    uploadForm.addEventListener('submit', function(e) {
+        if (!fileInput.files.length) {
+            e.preventDefault();
+            showError('Пожалуйста, выберите файл для загрузки');
+            return;
+        }
+
+        // Показать состояние загрузки
         const btnText = submitBtn.querySelector('.btn-text');
         const btnSpinner = submitBtn.querySelector('.btn-spinner');
-
+        
         btnText.style.display = 'none';
-        btnSpinner.style.display = 'block';
+        btnSpinner.style.display = 'inline';
         submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Обработка...';
     });
 });
 </script>

@@ -1,55 +1,91 @@
+<!-- Основной заголовок страницы -->
 <header class="main-header">
     <div class="container">
         <nav class="navbar">
+            <!-- Логотип слева -->
             <div class="nav-brand">
                 <a href="{{ url_for('index') }}" class="logo">
                     <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="эффективность.рф" class="logo-image">
                     <span class="logo-gradient">эффективность.рф</span>
                 </a>
             </div>
-            <ul class="nav-menu">
-                <li><a href="{{ url_for('index') }}#features">Возможности</a></li>
-                <li><a href="{{ url_for('index') }}#instructions">Инструкция</a></li>
-                <li><a href="{{ url_for('upload_page') }}" class="btn btn-outline">Создать отчет</a></li>
-            </ul>
-            <div class="hamburger">
-                <span></span>
-                <span></span>
-                <span></span>
+
+            <!-- Центральная навигация -->
+            <div class="nav-center">
+                <ul class="nav-menu">
+                    <li><a href="{{ url_for('index') }}#features">Возможности</a></li>
+                    <li><a href="{{ url_for('index') }}#instructions">Инструкция</a></li>
+                </ul>
             </div>
+
+            <!-- Правая часть с кнопкой -->
+            <div class="nav-actions">
+                <a href="{{ url_for('upload_page') }}" class="btn btn-outline">Создать отчет</a>
+            </div>
+
+            <!-- Гамбургер меню для мобильных -->
+            <button class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
         </nav>
     </div>
 </header>
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        const header = document.querySelector('.main-header');
-        const hamburger = document.querySelector('.hamburger');
-        const navMenu = document.querySelector('.nav-menu');
 
-        // Mobile menu toggle
-        hamburger?.addEventListener('click', function() {
+<!-- JavaScript для мобильного меню -->
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const header = document.querySelector('.main-header');
+    const hamburger = document.querySelector('.hamburger');
+    const navMenu = document.querySelector('.nav-menu');
+    const navActions = document.querySelector('.nav-actions');
+
+    // Мобильное меню
+    if (hamburger) {
+        hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
             navMenu.classList.toggle('active');
+            
+            // Показываем кнопку в мобильном меню
+            if (navActions) {
+                navActions.classList.toggle('active');
+            }
         });
+    }
 
-        // Header scroll effect
-        let lastScrollY = window.scrollY;
-
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 100) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
+    // Закрытие меню при клике на ссылку
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+                
+                if (navActions) {
+                    navActions.classList.remove('active');
+                }
             }
-
-            // Hide header on scroll down, show on scroll up
-            if (window.scrollY > lastScrollY && window.scrollY > 200) {
-                header.classList.add('hidden');
-            } else {
-                header.classList.remove('hidden');
-            }
-
-            lastScrollY = window.scrollY;
         });
     });
+
+    // Эффект скролла
+    let lastScrollY = window.scrollY;
+
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 100) {
+            header.classList.add('scrolled');
+        } else {
+            header.classList.remove('scrolled');
+        }
+
+        // Скрыть/показать хедер при скролле
+        if (window.scrollY > lastScrollY && window.scrollY > 200) {
+            header.classList.add('hidden');
+        } else {
+            header.classList.remove('hidden');
+        }
+
+        lastScrollY = window.scrollY;
+    });
+});
 </script>

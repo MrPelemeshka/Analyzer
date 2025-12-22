@@ -1,15 +1,22 @@
+<!-- Основной футер страницы -->
 <footer class="main-footer">
     <div class="container">
+        <!-- Контент футера в 3 колонки -->
         <div class="footer-content">
+            <!-- Левая колонка: информация о бренде -->
             <div class="footer-brand">
                 <a href="{{ url_for('index') }}" class="logo">
                     <img src="{{ url_for('static', filename='images/logo.svg') }}" alt="эффективность.рф" class="logo-image">
-                    <span class="logo-gradient">эффективность.рф</span>
+                    <!-- Белый текст для футера -->
+                    <span class="logo-footer">эффективность.рф</span>
                 </a>
                 <p class="footer-description">
-                    Сервис анализа эффективности оборудования. Превращаем данные в понятные отчеты.
+                    Сервис анализа эффективности оборудования.<br>
+                    Превращаем данные в понятные отчеты.
                 </p>
             </div>
+
+            <!-- Центральная колонка: быстрые ссылки -->
             <div class="footer-links">
                 <h4>Быстрые ссылки</h4>
                 <ul>
@@ -19,20 +26,28 @@
                     <li><a href="{{ url_for('upload_page') }}">Создать отчет</a></li>
                 </ul>
             </div>
+
+            <!-- Правая колонка: контакты -->
             <div class="footer-contact">
                 <h4>Контакты</h4>
                 <ul class="contact-info">
                     <li>
                         <i class="fas fa-globe"></i>
-                        <a href="https://эффективность.рф" class="footer-link">эффективность.рф</a>
+                        <a href="https://эффективность.рф">эффективность.рф</a>
                     </li>
                     <li>
                         <i class="fas fa-envelope"></i>
-                        <a href="mailto:info@ctprf.ru" class="footer-link">info@ctprf.ru</a>
+                        <a href="mailto:info@ctprf.ru">info@ctprf.ru</a>
+                    </li>
+                    <li>
+                        <i class="fab fa-telegram"></i>
+                        <a href="https://t.me/KlimovOE">@KlimovOE</a>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <!-- Нижняя часть футера -->
         <div class="footer-bottom">
             <p>&copy; 2025 эффективность.рф. Все права защищены.</p>
         </div>

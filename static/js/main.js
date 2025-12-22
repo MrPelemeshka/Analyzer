@@ -1,10 +1,9 @@
-// main.js - только основная логика
+// main.js - оптимизированная версия
 document.addEventListener('DOMContentLoaded', function() {
+    // Мобильное меню
     const hamburger = document.querySelector('.hamburger');
     const navMenu = document.querySelector('.nav-menu');
-    const header = document.querySelector('.main-header');
-
-    // Mobile menu toggle
+    
     if (hamburger) {
         hamburger.addEventListener('click', function() {
             hamburger.classList.toggle('active');
@@ -12,24 +11,28 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Smooth scrolling for anchor links
+    // Закрытие меню при клике на ссылку
+    document.querySelectorAll('.nav-menu a').forEach(link => {
+        link.addEventListener('click', function() {
+            if (hamburger && navMenu) {
+                hamburger.classList.remove('active');
+                navMenu.classList.remove('active');
+            }
+        });
+    });
+
+    // Плавная прокрутка
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+        anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
-            if (href !== '#') {
+            if (href !== '#' && href.startsWith('#')) {
                 e.preventDefault();
                 const target = document.querySelector(href);
                 if (target) {
-                    // Закрываем мобильное меню если открыто
-                    if (hamburger && navMenu) {
-                        hamburger.classList.remove('active');
-                        navMenu.classList.remove('active');
-                    }
-                    
-                    const headerHeight = header ? header.offsetHeight : 0;
-                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset;
+                    const headerHeight = document.querySelector('.main-header').offsetHeight;
+                    const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - headerHeight;
                     window.scrollTo({
-                        top: targetPosition - headerHeight,
+                        top: targetPosition,
                         behavior: 'smooth'
                     });
                 }
@@ -37,9 +40,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Header scroll effect
+    // Эффект хедера при скролле
+    const header = document.querySelector('.main-header');
     let lastScrollY = window.scrollY;
-    const headerHeight = header ? header.offsetHeight : 0;
 
     window.addEventListener('scroll', function() {
         if (window.scrollY > 100) {
@@ -48,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
             header.classList.remove('scrolled');
         }
 
-        // Hide header on scroll down, show on scroll up
+        // Скрыть/показать хедер при скролле
         if (window.scrollY > lastScrollY && window.scrollY > 200) {
             header.classList.add('hidden');
         } else {
@@ -58,59 +61,28 @@ document.addEventListener('DOMContentLoaded', function() {
         lastScrollY = window.scrollY;
     });
 
-    // Add scroll animations
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
+    // Анимация появления элементов
     const observer = new IntersectionObserver(function(entries) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('animate-in');
             }
         });
-    }, observerOptions);
+    }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -50px 0px'
+    });
 
-    // Observe elements for animation
+    // Наблюдение за элементами для анимации
     document.querySelectorAll('.feature-card, .step-item, .info-card').forEach(el => {
         observer.observe(el);
     });
 
-    // Add loading states
-    document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function() {
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                submitBtn.disabled = true;
-                submitBtn.classList.add('loading');
-            }
-        });
-    });
-
-    // Инициализация Telegram обратной связи
+    // Инициализация Telegram фидбэка
     initializeTelegramFeedback();
 });
 
-// Добавляем стили для анимаций
-const style = document.createElement('style');
-style.textContent = `
-    .feature-card,
-    .step-item,
-    .info-card {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.6s ease;
-    }
-
-    .animate-in {
-        opacity: 1;
-        transform: translateY(0);
-    }
-`;
-document.head.appendChild(style);
-
-// Telegram обратная связь
+// Telegram фидбэк
 function initializeTelegramFeedback() {
     const feedbackBtn = document.getElementById('feedbackBtn');
     const feedbackModal = document.getElementById('feedbackModal');
@@ -162,12 +134,12 @@ function initializeTelegramFeedback() {
 function openTelegram(type) {
     const telegramUrls = {
         direct: 'https://t.me/KlimovOE',
-        group: 'https://t.me/your_support_group' // Замените на вашу группу
+        group: 'https://t.me/+1234567890' // Замените на реальную ссылку
     };
 
     const url = telegramUrls[type];
     if (url) {
-        window.open(url, '_blank', 'noopener,noreferrer');
+        window.open(url, '_blank');
         
         showNotification(type === 'direct' 
             ? 'Открываю Telegram...' 
@@ -181,19 +153,7 @@ function openTelegram(type) {
     }
 }
 
-function sendQuickMessage() {
-    const message = "Привет! У меня вопрос по отчету эффективность.рф";
-    const telegramUrl = `https://t.me/KlimovOE?text=${encodeURIComponent(message)}`;
-    window.open(telegramUrl, '_blank', 'noopener,noreferrer');
-    showNotification('Открываю Telegram с готовым сообщением...');
-}
-
 function showNotification(message) {
-    const existingNotification = document.querySelector('.feedback-notification');
-    if (existingNotification) {
-        existingNotification.remove();
-    }
-
     const notification = document.createElement('div');
     notification.className = 'feedback-notification';
     notification.style.cssText = `
@@ -202,12 +162,14 @@ function showNotification(message) {
         right: 20px;
         background: var(--gradient-secondary);
         color: white;
-        padding: 15px 20px;
-        border-radius: 10px;
+        padding: 12px 16px;
+        border-radius: 8px;
         box-shadow: var(--shadow-lg);
         z-index: 10002;
         animation: slideInRight 0.3s ease;
         font-weight: 500;
+        font-size: 14px;
+        max-width: 300px;
     `;
     notification.textContent = message;
     document.body.appendChild(notification);
@@ -218,3 +180,32 @@ function showNotification(message) {
         }
     }, 3000);
 }
+
+// Добавляем стили для анимаций
+const style = document.createElement('style');
+style.textContent = `
+    .feature-card,
+    .step-item,
+    .info-card {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: all 0.6s ease;
+    }
+
+    .animate-in {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    @keyframes slideInRight {
+        from {
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+`;
+document.head.appendChild(style);

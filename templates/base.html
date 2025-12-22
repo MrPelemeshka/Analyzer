@@ -4,11 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Анализ эффективности оборудования - эффективность.рф{% endblock %}</title>
+    
+    <!-- Основные стили -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logo.svg') }}">
-    <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logo.svg') }}">
+    
+    <!-- Дополнительные стили блоков -->
+    {% block styles %}{% endblock %}
 </head>
 <body>
     <!-- Header -->
@@ -26,10 +36,11 @@
     <div class="feedback-floating">
         <button class="feedback-btn" id="feedbackBtn">
             <i class="fab fa-telegram"></i>
-            <span class="feedback-text">Написать в Telegram</span>
+            <span class="feedback-text">Telegram</span>
         </button>
     </div>
 
+    <!-- Modal Window -->
     <div class="feedback-modal" id="feedbackModal">
         <div class="modal-content">
             <div class="modal-header">
@@ -60,14 +71,17 @@
                 </div>
 
                 <div class="telegram-info">
-                    <p><strong>Быстрая помощь:</strong> отвечаем в течение 15 минут</p>
-                    <p><strong>Время работы:</strong> 9:00 - 21:00 по МСК</p>
+                    <p><i class="fas fa-bolt"></i> <strong>Быстрая помощь:</strong> отвечаем в течение 15 минут</p>
+                    <p><i class="fas fa-clock"></i> <strong>Время работы:</strong> 9:00 - 21:00 по МСК</p>
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- Основной JavaScript -->
     <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    
+    <!-- Дополнительные скрипты блоков -->
     {% block scripts %}{% endblock %}
 </body>
 </html>
