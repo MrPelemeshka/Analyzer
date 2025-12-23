@@ -1281,7 +1281,7 @@ main {
 .main-footer {
     background: var(--primary2);
     color: var(--neutrals1);
-    padding: 3rem 0 2rem;
+    padding: 3rem 0 0;
     position: relative;
     overflow: hidden;
 }
