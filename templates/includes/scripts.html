@@ -616,9 +616,12 @@ function updateBlock4() {
                     break;
                 case 'weeks':
                     const weekNumber = getWeekNumber(recordDate);
+                    const weekYear = getWeekYear(recordDate); // Используем год недели, а не год даты
                     const monday = getMondayOfWeek(recordDate);
-                    periodKey = monday.getFullYear() + '-W' + String(weekNumber).padStart(2, '0') +
-                                ' (' + monday.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit'}) + ')';
+
+                    // Форматируем ключ недели с правильным годом
+                    periodKey = weekYear + '-W' + String(weekNumber).padStart(2, '0') +
+                       ' (' + monday.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit'}) + ')';
                     break;
                 case 'months':
                     periodKey = recordDate.getFullYear() + '-' + String(recordDate.getMonth() + 1).padStart(2, '0');
@@ -878,6 +881,10 @@ function updateBlock4Productivity(productivityData, equipment, periods, periodTy
     // Создаем HTML для отображения
     let html = `
         <div class="productivity-section">
+            <div class="trend-chart-section">
+                <h4>График тренда коэффициента загрузки:</h4>
+                <div id="productivity-trend-chart" style="height: 350px;"></div>
+            </div>
             <div class="section-title">
                 <h3><i class="fas fa-chart-line"></i>Коэффициент загрузки оборудования</h3>
             </div>
@@ -950,10 +957,7 @@ function updateBlock4Productivity(productivityData, equipment, periods, periodTy
                 </div>
             </div>
 
-            <div class="trend-chart-section">
-                <h4>График тренда коэффициента загрузки:</h4>
-                <div id="productivity-trend-chart" style="height: 300px;"></div>
-            </div>
+
         </div>
     `;
 
@@ -1184,31 +1188,40 @@ function getProductivityColor(productivity) {
     return '#FF6B6B'; // Красный
 }
 
+// Заменяем старую функцию getWeekNumber на эту исправленную версию
 function getWeekNumber(date) {
-    const d = new Date(date);
-    d.setHours(0, 0, 0, 0);
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7; // Приводим к ISO (1-7, где 1 - понедельник)
 
-    // Первый день года
-    const firstDay = new Date(d.getFullYear(), 0, 1);
+    // Устанавливаем на ближайший четверг (для определения года недели)
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
 
-    // Устанавливаем понедельник как первый день недели (1 вместо 0)
-    const dayOfWeek = d.getDay() || 7; // Воскресенье становится 7
+    // Начало года
+    const yearStart = new Date(Date.UTC(d.getUTCFullYear(), 0, 1));
 
-    // Количество дней от первого дня года
-    const pastDaysOfYear = (d - firstDay) / 86400000;
-
-    // Номер недели (начинается с понедельника)
-    const weekNumber = Math.ceil((pastDaysOfYear + firstDay.getDay() + 1 - dayOfWeek) / 7);
+    // Номер недели
+    const weekNumber = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
 
     return weekNumber;
 }
 
-// Новая функция для получения даты понедельника недели
+// Также обновляем функцию getMondayOfWeek для использования ISO формата
 function getMondayOfWeek(date) {
     const d = new Date(date);
     const day = d.getDay();
-    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Понедельник как первый день
+    const diff = d.getDate() - day + (day === 0 ? -6 : 1); // Понедельник как первый день недели (ISO)
     return new Date(d.setDate(diff));
+}
+
+// Дополнительная функция для получения года недели (может отличаться от года даты)
+function getWeekYear(date) {
+    const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+    const dayNum = d.getUTCDay() || 7;
+
+    // Устанавливаем на ближайший четверг
+    d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+
+    return d.getUTCFullYear();
 }
 
 // Функция для обновления статистики в блоке 4
